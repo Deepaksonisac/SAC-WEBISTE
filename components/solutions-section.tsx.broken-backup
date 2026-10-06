@@ -1,4 +1,34 @@
-﻿'use client'
+$file = ".\app\globals.css"
+
+Add-Content $file @"
+
+/* SAC Trust Marquee - Continuous Moving Line */
+@keyframes sac-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.sac-marquee {
+  display: flex;
+  width: max-content;
+  animation: sac-marquee 45s linear infinite !important;
+  will-change: transform;
+}
+
+.sac-marquee:hover {
+  animation-play-state: running !important;
+}
+"@
+
+Write-Host "DONE - Marquee moving animation fixed."
+
+Remove-Item -Recurse -Force ".next" -ErrorAction SilentlyContinue
+
+npm run dev'use client'
 
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -182,4 +212,3 @@ export function SolutionsSection() {
     </section>
   )
 }
-
