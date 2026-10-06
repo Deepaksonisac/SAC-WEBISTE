@@ -1,0 +1,3441 @@
+/*---------------------------------------------------------------------*/
+
+(function ($) {
+    /*================= Global Variable Start =================*/
+    var isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent
+        );
+    var IEbellow9 = !$.support.leadingWhitespace;
+    var iPhoneAndiPad = /iPhone|iPod/i.test(navigator.userAgent);
+    var isIE =
+        navigator.userAgent.indexOf("MSIE") !== -1 ||
+        navigator.appVersion.indexOf("Trident/") > 0;
+
+    function isIEver() {
+        var myNav = navigator.userAgent.toLowerCase();
+        return myNav.indexOf("msie") != -1 ?
+            parseInt(myNav.split("msie")[1]) :
+            false;
+    }
+
+    //if (isIEver () == 8) {}
+    var jsFolder = "js/";
+    var cssFolder = "css/";
+    var hindiLang = window.location.pathname;
+    var ww = document.body.clientWidth,
+        wh = document.body.clientHeight;
+    var mobilePort = 1023,
+        ipadView = 1024,
+        wideScreen = 1600;
+
+    /*================= Global Variable End =================*/
+
+    /* Sticky Header */
+    $(window).scroll(function () {
+        if ($(window).scrollTop() >= 300) {
+            $("body").addClass("fixed-header");
+        } else {
+            $("body").removeClass("fixed-header");
+        }
+    });
+    if ($(".hero-banner").length) {
+        HomeVideo = $('.hero-banner video')[0];
+        HomeVideo.pause();
+    }
+    $(document).ready(function () {
+        $('.oil-fraud-popup-close, .oil-fraud-popup-ok').click(function () {
+
+            $('#oil-fraud-popup').hide();
+
+        });
+        var LagHindi = $('html[lang="hi"]').length;
+
+        // $('.glorious-legacy-container').each(function() {
+        //     var leftHeight = $(this).find('.left-part').outerHeight(); // Get left-part height
+        //     $(this).find('.glorious-legacy-year-wrapper').height(leftHeight); // Apply height to right-part
+        //   });
+
+        if ($(".scrollButton").length) {
+            $('.scrollButton').click(function () {
+                var sectionId = $(this).data('target'); // Get the section target from the data attribute
+                var headerHeight = $('header').outerHeight();
+                var sectionOffset = $(sectionId).offset().top;
+                $('html, body').animate({
+                    scrollTop: sectionOffset - headerHeight
+                }, 500);
+            });
+        }
+
+        if ($("body").hasClass('page-user')) {
+
+            var base_url = $('#base_url').val();
+            if ($("form.user-login-form").length) {
+                $("input[name='hiddenText']").val(base_url);
+            }
+        }
+        if ($('body').hasClass('page-user')) {
+            var base_url = $('#base_url').val();
+            var encryptUrl = base_url + 'encrypt/jencrypt';
+            $("form#user-login-form").jCryption({
+                getKeysURL: encryptUrl + "?getPublicKey=true",
+                handshakeURL: encryptUrl + "?handshake=true"
+            });
+            $("form#user-register-form").jCryption({
+                getKeysURL: encryptUrl + "?getPublicKey=true",
+                handshakeURL: encryptUrl + "?handshake=true"
+            });
+
+            $("form#user-pass").jCryption({
+                getKeysURL: encryptUrl + "?getPublicKey=true",
+                handshakeURL: encryptUrl + "?handshake=true"
+            });
+        }
+
+        if ($("form#startup-oil-india-form").length) {
+            $('.dateOfstratup').attr('disabled', 'disabled');
+            $('.provideDetails').attr('disabled', 'disabled');
+            $('.dpiitRegistration').attr('disabled', 'disabled');
+            $('.dpiitDate').attr('disabled', 'disabled');
+            $('.dpiitCertificate').attr('disabled', 'disabled');
+            $('.fileOther').attr('disabled', 'disabled');
+            var incorporated_val1 = $('input[type=radio][name=incorporated_last_two]:checked').val();
+            if (incorporated_val1 == 'Yes') {
+                $('.dateOfstratup').removeAttr('disabled');
+            } else {
+                $('.dateOfstratup').attr('disabled', 'disabled');
+            }
+            var provide_val1 = $('input[type=radio][name=doreceived_money]:checked').val();
+            if (provide_val1 == 'Yes') {
+                $('.provideDetails').removeAttr('disabled');
+            } else {
+                $('.provideDetails').attr('disabled', 'disabled');
+            }
+            var recognised_val1 = $('input[type=radio][name=is_dpiit_recognised]:checked').val();
+            //console.log(recognised_val);
+            if (recognised_val1 == 'Yes') {
+                $('.dpiitRegistration').removeAttr('disabled');
+                $('.dpiitDate').removeAttr('disabled');
+                $('.dpiitCertificate').removeAttr('disabled');
+            } else {
+                $('.dpiitRegistration').attr('disabled', 'disabled');
+                $('.dpiitDate').attr('disabled', 'disabled');
+                $('.dpiitCertificate').attr('disabled', 'disabled');
+            }
+            var issued_poc_val1 = $('input[type=radio][name=issued_poc]:checked').val();
+            if (issued_poc_val1 == 'Yes') {
+                $('.fileOther').removeAttr('disabled');
+            } else {
+                $('.fileOther').attr('disabled', 'disabled');
+            }
+            $('input[type=radio][name=incorporated_last_two]').change(function () {
+                var incorporated_val = $(this).val();
+                if (incorporated_val == 'Yes') {
+                    $('.dateOfstratup').removeAttr('disabled');
+                } else {
+                    $('#edit-date-of-startup').val('');
+                    $('.dateOfstratup').attr('disabled', 'disabled');
+                }
+            });
+            $('input[type=radio][name=doreceived_money]').change(function () {
+                var doreceived_money_val = $(this).val();
+                if (doreceived_money_val == 'Yes') {
+                    $('.provideDetails').removeAttr('disabled');
+                } else {
+                    $('#edit-provide-details').val('');
+                    $('.provideDetails').attr('disabled', 'disabled');
+                }
+            });
+            $('input[type=radio][name=is_dpiit_recognised]').change(function () {
+                var recognised_val = $(this).val();
+                if (recognised_val == 'Yes') {
+                    $('.dpiitRegistration').removeAttr('disabled');
+                    $('.dpiitDate').removeAttr('disabled');
+                    $('.dpiitCertificate').removeAttr('disabled');
+                } else {
+                    $('#edit-dpiit-registration').val('');
+                    $('#edit-dpiit-date').val('');
+                    $('#edit-dpiit-certificate').val('');
+                    $('.dpiitRegistration').attr('disabled', 'disabled');
+                    $('.dpiitDate').attr('disabled', 'disabled');
+                    $('.dpiitCertificate').attr('disabled', 'disabled');
+                }
+            });
+
+            $('input[type=radio][name=issued_poc]').change(function () {
+                var issued_poc_val = $(this).val();
+                if (issued_poc_val == 'Yes') {
+                    $('.fileOther').removeAttr('disabled');
+                } else {
+                    $('#edit-file-other').val('');
+                    $('.fileOther').attr('disabled', 'disabled');
+                }
+            });
+            $.validator.addMethod("mobilenocorrect", function (value, element) {
+                return this.optional(element) || /^[0-9 ]+$/i.test(value);
+            }, "Please enter valid mobile no.");
+            $.validator.addMethod("description", function (value, element) {
+                return this.optional(element) || /[^#$^*+=`~\/{}]+$/i.test(value);
+            }, "Please enter proper detail.");
+            $.validator.addMethod("onlytext", function (value, element) {
+                return this.optional(element) || /^[a-zA-Z0-9 .]+$/i.test(value);
+            }, "Special Character should not allow to this field");
+            $.validator.addMethod("maxsize", function (value, element, param) {
+                if (this.optional(element)) {
+                    return true;
+                }
+                if ($(element).attr("type") === "file") {
+                    if (element.files && element.files.length) {
+                        for (var i = 0; i < element.files.length; i++) {
+                            if (element.files[i].size > param) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }, "File too large. File must be less than 20 MB");
+            $.validator.addMethod("extension", function (value, element, param) {
+                param = typeof param === "string" ? param.replace(/,/g, '|') : "pdf";
+                return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
+            }, "Please Upload only pdf files formated.");
+            $.validator.addMethod("maxWords", function (value, element, params) {
+                return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length <= 200;
+            }, "Please enter 200 words or less.");
+            $.validator.addMethod("onlytextnumeric", function (value, element) {
+                return this.optional(element) || /^[a-zA-Z0-9]+$/i.test(value);
+            }, "Please enter only letter and numeric.");
+            $.validator.addMethod("email", function (value, element) {
+                return this.optional(element) || /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value);
+            }, "Please enter valid email id.");
+
+            // $.validator.setDefaults({
+            //     debug: true,
+            //     success: "valid"
+            //   });
+            $("#startup-oil-india-form").validate({
+                rules: {
+                    'startup_name': { required: true, description: true, maxlength: 255 },
+                    'incorporated_last_two': { required: true },
+                    'date_of_startup': {
+                        required: {
+                            depends: function (element) {
+                                var incorporated_val = $('input[type=radio][name=incorporated_last_two]:checked').val();
+                                if (incorporated_val == 'Yes') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        },
+
+                    },
+                    'doreceived_money': { required: true },
+                    'provide_details': {
+                        required: {
+                            depends: function (element) {
+                                var provide_val = $('input[type=radio][name=doreceived_money]:checked').val();
+                                if (provide_val == 'Yes') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        },
+                        description: true,
+                        maxWords: 200
+                    },
+
+                    'is_dpiit_recognised': { required: true },
+                    'dpiit_registration': {
+                        required: {
+                            depends: function (element) {
+                                var recognised_val = $('input[type=radio][name=is_dpiit_recognised]:checked').val();
+                                //console.log(recognised_val);
+                                if (recognised_val == 'Yes') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        },
+                        onlytextnumeric: true,
+                        maxlength: 255
+                    },
+
+                    'dpiit_date': {
+                        required: {
+                            depends: function (element) {
+                                var dpiit_val = $('input[type=radio][name=is_dpiit_recognised]:checked').val();
+                                if (dpiit_val == 'Yes') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        }
+                    },
+                    'dpiit_certificate': {
+                        required: {
+                            depends: function (element) {
+                                var certificate_val = $('input[type=radio][name=is_dpiit_recognised]:checked').val();
+                                if (certificate_val == 'Yes') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        },
+                        extension: "pdf",
+                        maxsize: 20971520
+                    },
+                    'applicant_name': { required: true, onlytext: true, maxlength: 255 },
+                    'applicant_mobile': { required: true, mobilenocorrect: true, number: true, rangelength: [10, 10] },
+                    'applicant_address': { required: true, description: true, maxlength: 255 },
+                    'applicant_email': { email: true, required: true, maxlength: 255 },
+                    'issued_poc': { required: true },
+                    'file_other': {
+                        required: {
+                            depends: function (element) {
+                                var issued_poc_val = $('input[type=radio][name=issued_poc]:checked').val();
+                                if (issued_poc_val == 'Yes') {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        },
+                        extension: "pdf",
+                        maxsize: 20971520
+                    },
+
+                    'is_icdr_regulations': { required: true },
+                    'is_already': { required: true },
+                    'keyarea_of_innovation': { required: true, description: true, maxWords: 200 },
+                    'brief_summary': { required: true, description: true, maxWords: 200 },
+                    'applicability_startup': { required: true, description: true, maxWords: 200 },
+                    'capability_startup': { required: true, description: true, maxWords: 200 },
+                    'technical_feasibility': { required: true, description: true, maxWords: 200 },
+                    'file_startup_idea': { required: true, extension: "pdf", maxsize: 20971520 },
+                    'total_est_budget': { required: true, number: true, maxlength: 100 },
+                    'project_duration': { required: true, description: true, maxlength: 100 },
+                    'file_chart_diagram': { required: true, },
+                    'specify_requirements': { required: true, description: true },
+                    'poc_other_information': { required: true, description: true },
+                    'captcha_response': { required: true },
+                },
+                // ignore: ".form-file",
+                messages: {
+                    'provide_details': {
+                        description: 'Please enter proper Provide Details.',
+                        maxWords: 'Please enter 200 words or less.'
+                    },
+                    'applicant_mobile': {
+                        rangelength: 'Please enter only 10 digit number.'
+                    },
+                    'applicant_address': {
+                        description: 'Please enter proper Applicant Address.',
+                    },
+                    'applicant_email': {
+                        email: 'Please enter valid Email address.',
+                        maxlength: 'Please enter max 200 character email address.',
+                    },
+                    'keyarea_of_innovation': {
+                        description: 'Please enter proper Key Area of your Start-up innovation/technology/ idea/ project.',
+                        maxWords: 'Please enter 200 words or less.'
+                    },
+                    'brief_summary': {
+                        description: 'Please enter proper Brief Summary your Start-up idea/ Start-up Project.',
+                        maxWords: 'Please enter 200 words or less.'
+                    },
+                    'applicability_startup': {
+                        description: 'Please enter proper Applicability of the Start-up Idea.',
+                        maxWords: 'Please enter 200 words or less.'
+                    },
+                    'capability_startup': {
+                        description: 'Please enter proper Capability of the Start-up Idea to address pain areas.',
+                        maxWords: 'Please enter 200 words or less.'
+                    },
+                    'technical_feasibility': {
+                        description: 'Please enter proper Technical Feasibility of the Start-up idea.',
+                        maxWords: 'Please enter 200 words or less.'
+                    },
+                    'total_est_budget': {
+                        description: 'Please enter proper Total Estimated Budget Requirement.',
+                        maxlength: 'Please enter max 100 character Total Estimated Budget Requirement.',
+                    },
+                    'project_duration': {
+                        description: 'Please enter proper Project Duration.',
+                        maxlength: 'Please enter max 100 character Project Duration.',
+                    },
+                    'specify_requirements': {
+                        description: 'Please enter proper Specify requirements from OIL other than fund, such as Field trial at OILs Operational Fields.',
+                    },
+                    'poc_other_information': {
+                        description: 'Please enter proper Any other information related to your application.',
+                    },
+
+                },
+                submitHandler: function (form, e) {
+                    e.preventDefault();
+
+                    form.submit()
+                }
+            });
+            // $('input[name^="fileupload"]').rules('add', {
+            //     required: true,
+            //     accept: "image/jpeg, image/pjpeg"
+            // })
+        }
+
+        // Annual financial results page visitor counter.
+        function FinancialPageCounter(element) {
+            this.$element = $(element);
+            this.$internal = this.$element.find(".financial-counter-internal .count");
+            this.$external = this.$element.find(".financial-counter-external .count");
+            this.$total = this.$element.find(".financial-counter-total .count");
+            this.$infoButton = this.$element.find(".financial-counter-info");
+            this.$details = this.$element.find(".financial-counter-details");
+            this.basePath = this.getBasePath();
+        }
+
+        FinancialPageCounter.prototype.getBasePath = function () {
+            var base = $("#base_url").length ? $("#base_url").val() : "/";
+            return base + (hindiLang.indexOf("/hi") !== -1 ? "hi/" : "");
+        };
+
+        FinancialPageCounter.prototype.init = function () {
+            this.bindInfoButton();
+            this.loadCounts();
+        };
+
+        FinancialPageCounter.prototype.bindInfoButton = function () {
+            var self = this;
+            if (!this.$infoButton.length || !this.$details.length) {
+                return;
+            }
+
+            this.$infoButton.on("click", function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var open = !self.$details.hasClass("is-open");
+                self.$details.toggleClass("is-open", open).prop("hidden", !open);
+                self.$infoButton.attr("aria-expanded", open ? "true" : "false");
+            });
+
+            $(document).on("click", function (event) {
+                if (!self.$element.is(event.target) && self.$element.has(event.target).length === 0) {
+                    self.$details.removeClass("is-open").prop("hidden", true);
+                    self.$infoButton.attr("aria-expanded", "false");
+                }
+            });
+        };
+
+        FinancialPageCounter.prototype.loadCounts = function () {
+            var self = this;
+            //console.log(self);
+            $.ajax({
+                url: this.basePath + "financial-results-page-counter",
+                //method: "post",
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    self.render(data);
+
+                },
+                error: function () {
+                    console.log("Failed financial page counter entry");
+                },
+            });
+        };
+
+        FinancialPageCounter.prototype.render = function (data) {
+            if (!data) {
+                return;
+            }
+           // console.log(data);
+            this.setValue(this.$internal, data.internal_count);
+            this.setValue(this.$external, data.external_count);
+            this.setValue(this.$total, data.count);
+        };
+
+        FinancialPageCounter.prototype.setValue = function ($node, value) {
+            if ($node.length && typeof value !== "undefined") {
+                $node.text(String(value).padStart(6, "0"));
+            }
+        };
+
+        $(".financial-page-counter").each(function () {
+            new FinancialPageCounter(this).init();
+        });
+
+
+        // Home Video Play Pause
+        if ($(".hero-banner").length) {
+            function HomeVideoPlayPause() {
+                HomeVideo.play();
+            }
+            setTimeout(HomeVideoPlayPause, 5000);
+        }
+
+        // Counter Animation Function
+        function numberWithCommas(x) {
+            if (x % 1 !== 0) {
+                return x.toString();
+            } else {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        }
+        function getPrecision(value) {
+            var match = value.match(/\.(\d+)/);
+            return match ? match[1].length : 0;
+        }
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                // console.log('Element in viewport:', entry.target);
+                if (entry.isIntersecting) {
+                    // console.log('Animating counter:', entry.target);
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target); // Stop observing once the element is in the viewport
+                }
+            });
+        }, { threshold: 0 });
+
+        // Animate counter function
+        function animateCounter(element) {
+            var $element = $(element);
+            var dataTo = $element.attr('data-to');
+            var toValue = parseFloat(dataTo.replace(/,/g, ''));
+            var precision = getPrecision(dataTo);
+
+            $({ Counter: 0 }).animate({ Counter: toValue }, {
+                duration: 3000,
+                easing: 'swing',
+                step: function () {
+                    var formattedValue = numberWithCommas(parseFloat(this.Counter.toFixed(precision)));
+                    $element.text(formattedValue);
+                },
+                complete: function () {
+                    $element.text(numberWithCommas(toValue.toFixed(precision)));
+                }
+            });
+            $element.css('opacity', 1);
+        }
+        $('.ValueAnimated1').each(function () {
+            // console.log('Observing counter:', this);
+            observer.observe(this);
+        });
+
+        // Top Timeline
+        if ($(".topTimeline").length) {
+            function moveInnerCol() {
+                var windowWidth = $(window).width();
+                if (windowWidth <= 575) {
+                    $('.topTimeline').append($('.bottomRow .tlInnerCol'));
+                } else {
+                    $('.bottomRow').append($('.topTimeline .tlInnerCol'));
+                }
+            }
+            moveInnerCol();
+            $(window).resize(moveInnerCol);
+        }
+
+        // Home popup close
+        if ($(".view-home-page-popup").length) {
+            $('.view-home-page-popup').fadeIn(3000);
+            if ($('body').hasClass('page-frontpage')) {
+                $('html').addClass('popup-removed');
+            }
+            $(".close-popup-btn").click(function () {
+                $(".view-home-page-popup").css("display", "none");
+                $('html').removeClass('popup-removed');
+            });
+        };
+
+        if ($(".moreless-button").length) {
+            $('.moreless-button').click(function () {
+                $('.moretext').slideToggle();
+                if ($('.moreless-button').text() == "Read more") {
+                    $(this).text("Read less")
+                    $(this).title("Read less")
+                } else {
+                    $(this).text("Read more")
+                    $(this).title("Read more")
+                }
+            });
+        };
+
+        // Tab Section
+        // Initial activation of the first tab
+        $('.tab-section .resTab-1 .tabNav-1 li').first().addClass('active');
+        $('.tab-section .resTab-1 .tabContainer-1 >div').first().addClass('active');
+
+        // Get all the tab elements
+        var $TabsCodetabs1 = $(".tab-section .resTab-1 .tabNav-1 li"),
+            TabsCodeclickDisabled1 = false;
+
+        // Add tabindex so they can be focused with the keyboard
+        $TabsCodetabs1.attr('tabindex', '0');
+
+        function TabSectionDelay() {
+            $TabsCodetabs1.off("mouseenter focus").on("mouseenter focus", function () {
+                if (TabsCodeclickDisabled1 || $(this).hasClass("active")) {
+                    return;
+                }
+
+                var TabsCodetabNum1 = $(this).index();
+                var TabsCodenthChild1 = TabsCodetabNum1 + 1;
+
+                $(".tab-section .resTab-1 .tabNav-1 li.active").removeClass("active");
+                $(this).addClass("active");
+
+                $(".tab-section .resTab-1 .tabContainer-1 >div.active").fadeOut(200, function () {
+                    $(this).removeClass("active");
+                    $(".tab-section .resTab-1 .tabContainer-1 >div:nth-child(" + TabsCodenthChild1 + ")")
+                        .addClass("active").fadeIn(200);
+                });
+
+                TabsCodeclickDisabled1 = true;
+                setTimeout(function () {
+                    TabsCodeclickDisabled1 = false;
+                }, 200);
+            });
+        }
+
+        // Call this with delay as you originally intended
+        setTimeout(function () {
+            TabSectionDelay();
+        }, 3000);
+
+
+        // Menu ext link
+        $('header a[href*="https"], header a[href*="http"], footer a[href*="https"], footer a[href*="http"]').each(function () {
+            $(this).addClass('menu-ext-link');
+        });
+
+        // Get NSE BSE Share Price
+        if ($("#base_url").length) {
+            var base_url = $("#base_url").val();
+            if (base_url != "" || base_url != 'undefined') {
+                var substring = '/hi';
+                //console.log(hindiLang);
+                if (hindiLang.indexOf(substring) !== -1) {
+                    var durl = base_url + 'get-nse-bse-share-price';
+                } else {
+                    var durl = base_url + 'get-nse-bse-share-price';
+                }
+                // console.log(durl);
+                $.ajax({
+                    beforeSend: function () {
+                        $('.spinner-border').css("visibility", "visible");
+                    },
+                    url: durl,
+                    method: 'post',
+                    context: document.body,
+                    data: { location: window.location.href },
+                    cache: false,
+                    success: function (data) {
+                        //	console.log(data);
+                        //$(".nseFlipBox").html(data);
+
+                    },
+                    complete: function () {
+                        $('.spinner-border').css("visibility", "hidden");
+                        //$("#litecontainer").removeAttr('style');
+                    },
+                    error: function (data) {
+                        console.log('Failed Path Entry');
+                    }
+                });
+            }
+        }
+
+
+
+        // table data attribute
+        if ($("td").length) {
+            setTimeout(function () {
+                $("td").each(function () {
+                    var th = $(this).closest("table").find("th").eq(this.cellIndex);
+                    var thContent = $(th).html();
+                    $(this).attr("data-th", thContent);
+                });
+            }, 200);
+        }
+
+        // accordion
+        if ($(".accordion_tab").length) {
+            $('.accordion_tab').on('click', function () {
+                $('.accordion_tab.active, .download ul.active').removeClass('active');
+                $(this).addClass('active');
+                $(this).next('ul').addClass('active');
+            });
+        };
+        // testimonials
+        if ($(".testimonials-section").length) {
+            var Testimonials = new Swiper(".testimonials-section .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                speed: 500,
+                navigation: {
+                    nextEl: ".TestimonialsNext",
+                    prevEl: ".TestimonialsPrev",
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1200: {
+                        slidesPerView: 2,
+                    }
+                }
+            });
+        };
+        if ($(".CSR_project").length) {
+            var CSRProjectNew = new Swiper(".CSR_project .swiper-container", {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                loop: true,
+                navigation: {
+                    nextEl: ".CSRProjectNext",
+                    prevEl: ".CSRProjectPrev",
+                },
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                speed: 500,
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    992: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 3,
+                    }
+                }
+            });
+        };
+        if ($(".awards-accolades-view-content").length) {
+            var AwardsAccolades = new Swiper(".awards-accolades-view-content .swiper-container", {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                speed: 500,
+                navigation: {
+                    nextEl: ".AwardsAccoladesNext",
+                    prevEl: ".AwardsAccoladesPrev",
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    992: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 3,
+                    }
+                }
+            });
+        };
+        // education slider 1
+        if ($(".education-slider-one").length) {
+            var EducationSliderOne = new Swiper(".education-slider-one .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".EducationSliderOneNext",
+                    prevEl: ".EducationSliderOnePrev",
+                },
+            });
+        };
+        // education slider 2
+        if ($(".education-slider-two").length) {
+            var EducationSliderTwo = new Swiper(".education-slider-two .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".EducationSliderTwoNext",
+                    prevEl: ".EducationSliderTwoPrev",
+                },
+            });
+        };
+        // education slider 3
+        if ($(".education-slider-three").length) {
+            var EducationSliderThree = new Swiper(".education-slider-three .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".EducationSliderThreeNext",
+                    prevEl: ".EducationSliderThreePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // education slider 4
+        if ($(".education-slider-four").length) {
+            var EducationSliderFour = new Swiper(".education-slider-four .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".EducationSliderFourNext",
+                    prevEl: ".EducationSliderFourPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // education slider 5
+        if ($(".education-slider-five").length) {
+            var EducationSliderFive = new Swiper(".education-slider-five .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".EducationSliderFiveNext",
+                    prevEl: ".EducationSliderFivePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // health slider 1
+        if ($(".health-slider-one").length) {
+            var HealthSliderOne = new Swiper(".health-slider-one .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSliderOneNext",
+                    prevEl: ".HealthSliderOnePrev",
+                },
+            });
+        };
+        // health slider 3
+        if ($(".health-slider-three").length) {
+            var HealthSliderThree = new Swiper(".health-slider-three .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSliderThreeNext",
+                    prevEl: ".HealthSliderThreePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // health slider 4
+        if ($(".health-slider-four").length) {
+            var HealthSliderFour = new Swiper(".health-slider-four .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSliderFourNext",
+                    prevEl: ".HealthSliderFourPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // health slider 5
+        if ($(".health-slider-five").length) {
+            var HealthSliderFive = new Swiper(".health-slider-five .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSliderFiveNext",
+                    prevEl: ".HealthSliderFivePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // health slider 6
+        if ($(".health-slider-six").length) {
+            var HealthSliderSix = new Swiper(".health-slider-six .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSliderSixNext",
+                    prevEl: ".HealthSliderSixPrev",
+                },
+            });
+        };
+
+        // health slider 7
+        if ($(".health-slider-seven").length) {
+            var HealthSliderSeven = new Swiper(".health-slider-seven .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSliderSevenNext",
+                    prevEl: ".HealthSliderSevenPrev",
+                },
+            });
+        };
+
+
+        // welfare persons 1
+        if ($(".welfare-persons-disabilities-one").length) {
+            var WelfarePersonsSliderOne = new Swiper(".welfare-persons-disabilities-one .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".WelfarePersonsSliderOneNext",
+                    prevEl: ".WelfarePersonsSliderOnePrev",
+                },
+            });
+        };
+
+        // welfare persons 2
+        if ($(".welfare-persons-disabilities-two").length) {
+            var WelfarePersonsSliderTwo = new Swiper(".welfare-persons-disabilities-two .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".WelfarePersonsSliderTwoNext",
+                    prevEl: ".WelfarePersonsSliderTwoPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+        // promotion sports 1
+        if ($(".promotion-sports-slider-one").length) {
+            var PromotionSportsSliderOne = new Swiper(".promotion-sports-slider-one .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".PromotionSportsSliderOneNext",
+                    prevEl: ".PromotionSportsSliderOnePrev",
+                },
+            });
+        };
+        // promotion sports 2
+        if ($(".promotion-sports-slider-two").length) {
+            var PromotionSportsSliderTwo = new Swiper(".promotion-sports-slider-two .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".PromotionSportsSliderTwoNext",
+                    prevEl: ".PromotionSportsSliderTwoPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+        // women empowerment 3
+        if ($(".women-empowerment-slider-three").length) {
+            var WomenEmpowermentSliderThree = new Swiper(".women-empowerment-slider-three .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".WomenEmpowermentSliderThreeNext",
+                    prevEl: ".WomenEmpowermentSliderThreePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+        // women empowerment 2
+        if ($(".women-empowerment-slider-two").length) {
+            var WomenEmpowermentSliderTwo = new Swiper(".women-empowerment-slider-two .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".WomenEmpowermentSliderTwoNext",
+                    prevEl: ".WomenEmpowermentSliderTwoPrev",
+                },
+            });
+        };
+        // women empowerment 1
+        if ($(".women-empowerment-slider-one").length) {
+            var WomenEmpowermentSliderOne = new Swiper(".women-empowerment-slider-one .swiper-container", {
+                slidesPerView: 2,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".WomenEmpowermentSliderOneNext",
+                    prevEl: ".WomenEmpowermentSliderOnePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1200: {
+                        slidesPerView: 2,
+                    }
+                }
+            });
+        };
+        // women empowerment 1
+        if ($(".swachh-bharat-slider-one").length) {
+            var SwachhBharatSliderOne = new Swiper(".swachh-bharat-slider-one .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".SwachhBharatSliderOneNext",
+                    prevEl: ".SwachhBharatSliderOnePrev",
+                },
+            });
+        };
+
+        // women empowerment 1
+        if ($(".swachh-bharat-slider-two").length) {
+            var SwachhBharatSliderTwo = new Swiper(".swachh-bharat-slider-two .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".SwachhBharatSliderTwoNext",
+                    prevEl: ".SwachhBharatSliderTwoPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+        // skill development 1
+        if ($(".skill-development-slider-one").length) {
+            var SkillDevelopmentSliderOne = new Swiper(".skill-development-slider-one .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".SkillDevelopmentSliderOneNext",
+                    prevEl: ".SkillDevelopmentSliderOnePrev",
+                },
+            });
+        };
+        // skill development 2
+        if ($(".skill-development-slider-two").length) {
+            var SkillDevelopmentSliderTwo = new Swiper(".skill-development-slider-two .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".SkillDevelopmentSliderTwoNext",
+                    prevEl: ".SkillDevelopmentSliderTwoPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+        // skill development 3
+        if ($(".skill-development-slider-three").length) {
+            var SkillDevelopmentSliderThree = new Swiper(".skill-development-slider-three .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".SkillDevelopmentSliderThreeNext",
+                    prevEl: ".SkillDevelopmentSliderThreePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+        // skill development 4
+        if ($(".skill-development-slider-four").length) {
+            var SkillDevelopmentSliderFour = new Swiper(".skill-development-slider-four .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".SkillDevelopmentSliderFourNext",
+                    prevEl: ".SkillDevelopmentSliderFourPrev",
+                },
+            });
+        };
+
+        // sustainable environment 1
+        if ($(".sustainable-environment-slider-one").length) {
+            var SustainableEnvironmentSliderOne = new Swiper(".sustainable-environment-slider-one .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".SustainableEnvironmentSliderOneNext",
+                    prevEl: ".SustainableEnvironmentSliderOnePrev",
+                },
+            });
+        };
+
+        // sustainable environment 2
+        if ($(".sustainable-environment-slider-two").length) {
+            var SustainableEnvironmentSliderTwo = new Swiper(".sustainable-environment-slider-two .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".SustainableEnvironmentSliderTwoNext",
+                    prevEl: ".SustainableEnvironmentSliderTwoPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+        // sustainable environment 3
+        if ($(".sustainable-environment-slider-three").length) {
+            var SustainableEnvironmentSliderThree = new Swiper(".sustainable-environment-slider-three .swiper-container", {
+                slidesPerView: 3,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".SustainableEnvironmentSliderThreeNext",
+                    prevEl: ".SustainableEnvironmentSliderThreePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 3,
+                    }
+                }
+            });
+        };
+
+        // sustainable livelihood 1
+        if ($(".sustainable-livelihood-slider-one").length) {
+            var SustainableLivelihoodSliderOne = new Swiper(".sustainable-livelihood-slider-one .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".SustainableLivelihoodSliderOneNext",
+                    prevEl: ".SustainableLivelihoodSliderOnePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // sustainable livelihood 2
+        if ($(".sustainable-livelihood-slider-two").length) {
+            var SustainableLivelihoodSliderTwo = new Swiper(".sustainable-livelihood-slider-two .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".SustainableLivelihoodSliderTwoNext",
+                    prevEl: ".SustainableLivelihoodSliderTwoPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // sustainable livelihood 2
+        if ($(".sustainable-livelihood-slider-three").length) {
+            var SustainableLivelihoodSliderThree = new Swiper(".sustainable-livelihood-slider-three .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".SustainableLivelihoodSliderThreeNext",
+                    prevEl: ".SustainableLivelihoodSliderThreePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // midstream 1
+        if ($(".midstream-slider-one").length) {
+            var MidStreamSliderOne = new Swiper(".midstream-slider-one .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".MidStreamSliderOneNext",
+                    prevEl: ".MidStreamSliderOnePrev",
+                },
+            });
+        };
+
+        // midstream 2
+        if ($(".midstream-slider-two").length) {
+            var MidStreamSliderTwo = new Swiper(".midstream-slider-two .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".MidStreamSliderTwoNext",
+                    prevEl: ".MidStreamSliderTwoPrev",
+                },
+            });
+        };
+
+        // midstream 2
+        if ($(".midstream-slider-three").length) {
+            var MidStreamSliderThree = new Swiper(".midstream-slider-three .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".MidStreamSliderThreeNext",
+                    prevEl: ".MidStreamSliderThreePrev",
+                },
+            });
+        };
+
+        // Health Safety 1
+        if ($(".health-safety-slider-one").length) {
+            var HealthSafetySliderOne = new Swiper(".health-safety-slider-one .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSafetySliderOneNext",
+                    prevEl: ".HealthSafetySliderOnePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // Health Safety 2
+        if ($(".health-safety-slider-two").length) {
+            var HealthSafetySliderTwo = new Swiper(".health-safety-slider-two .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSafetySliderTwoNext",
+                    prevEl: ".HealthSafetySliderTwoPrev",
+                },
+            });
+        };
+
+        // Health Safety 3
+        if ($(".health-safety-slider-three").length) {
+            var HealthSafetySliderThree = new Swiper(".health-safety-slider-three .swiper-container", {
+                slidesPerView: 3,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSafetySliderThreeNext",
+                    prevEl: ".HealthSafetySliderThreePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 3,
+                    }
+                }
+            });
+        };
+        // Health Safety 4
+        if ($(".health-safety-slider-four").length) {
+            var HealthSafetySliderFour = new Swiper(".health-safety-slider-four .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSafetySliderFourNext",
+                    prevEl: ".HealthSafetySliderFourPrev",
+                },
+            });
+        };
+        // Health Safety 5
+        if ($(".health-safety-slider-five").length) {
+            var HealthSafetySliderFive = new Swiper(".health-safety-slider-five .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSafetySliderFiveNext",
+                    prevEl: ".HealthSafetySliderFivePrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+        // Health Safety 6
+        if ($(".health-safety-slider-six").length) {
+            var HealthSafetySliderSix = new Swiper(".health-safety-slider-six .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSafetySliderSixNext",
+                    prevEl: ".HealthSafetySliderSixPrev",
+                },
+            });
+        };
+        // Health Safety 7
+        if ($(".health-safety-slider-seven").length) {
+            var HealthSafetySliderSeven = new Swiper(".health-safety-slider-seven .swiper-container", {
+                slidesPerView: 3,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSafetySliderSevenNext",
+                    prevEl: ".HealthSafetySliderSevenPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 3,
+                    }
+                }
+            });
+        };
+
+        // Health Safety 8
+        if ($(".health-safety-slider-eight").length) {
+            var HealthSafetySliderEight = new Swiper(".health-safety-slider-eight .swiper-container", {
+                slidesPerView: 4,
+                spaceBetween: 24,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSafetySliderEightNext",
+                    prevEl: ".HealthSafetySliderEightPrev",
+                },
+                breakpoints: {
+                    1: {
+                        slidesPerView: 1,
+                    },
+                    576: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    }
+                }
+            });
+        };
+
+        // Health Safety 9
+        if ($(".health-safety-slider-nine").length) {
+            var HealthSafetySliderNine = new Swiper(".health-safety-slider-nine .swiper-container", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                navigation: {
+                    nextEl: ".HealthSafetySliderNineNext",
+                    prevEl: ".HealthSafetySliderNinePrev",
+                },
+            });
+        };
+        // initiative
+        if ($(".csr-initiative").length) {
+            var CSRInitiatives = new Swiper(".csr-initiative .swiper-container", {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                centeredSlides: true,
+                loop: true,
+                navigation: {
+                    nextEl: ".CSRInitiativesNext",
+                    prevEl: ".CSRInitiativesPrev",
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1200: {
+                        slidesPerView: 3,
+                    }
+                }
+            });
+        };
+
+        // Sucess_Stories
+        if ($(".csr-sucess-stories").length) {
+            var Sucess_Stories = new Swiper(".csr-sucess-stories .swiper-container", {
+                slidesPerView: 2,
+                loop: false,
+                spaceBetween: 30,
+                navigation: {
+                    nextEl: ".CSRSucessStoriesNext",
+                    prevEl: ".CSRSucessStoriesPrev",
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1200: {
+                        slidesPerView: 2,
+
+                    }
+                }
+            });
+        };
+
+        // oil values
+        var OilValues = window.matchMedia("(max-width: 1199px)");
+        if (OilValues.matches) {
+            if ($(".oil-values").length) {
+                var OilValuesSlider = new Swiper(".oil-values .swiper-container", {
+                    slidesPerView: 3,
+                    spaceBetween: 0,
+                    loop: true,
+                    navigation: {
+                        nextEl: ".OilValuesNext",
+                        prevEl: ".OilValuesPrev",
+                    },
+                    breakpoints: {
+                        0: {
+                            slidesPerView: 1,
+                        },
+                        576: {
+                            slidesPerView: 2,
+                        },
+                        992: {
+                            slidesPerView: 3,
+                        },
+                        1200: {
+                            slidesPerView: 3,
+                        }
+                    }
+                });
+            };
+        }
+
+        // JaisalmerBasin1
+        var JaisalmerBasin1 = window.matchMedia("(max-width: 1199px)");
+        if (JaisalmerBasin1.matches) {
+            if ($(".JaisalmerBasin1").length) {
+                var JaisalmerBasin1Slider = new Swiper(".JaisalmerBasin1 .swiper-container", {
+                    slidesPerView: 4,
+                    spaceBetween: 0,
+                    loop: false,
+                    navigation: {
+                        nextEl: ".JaisalmerBasin1Next",
+                        prevEl: ".JaisalmerBasin1Prev",
+                    },
+                    breakpoints: {
+                        0: {
+                            slidesPerView: 1,
+                        },
+                        576: {
+                            slidesPerView: 2,
+                        },
+                        768: {
+                            slidesPerView: 3,
+                        },
+                        992: {
+                            slidesPerView: 4,
+                        },
+                        1200: {
+                            slidesPerView: 4,
+                        }
+                    }
+                });
+            };
+        }
+
+        // JaisalmerBasin2
+        var JaisalmerBasin2 = window.matchMedia("(max-width: 1199px)");
+        if (JaisalmerBasin2.matches) {
+            if ($(".JaisalmerBasin2").length) {
+                var JaisalmerBasin2Slider = new Swiper(".JaisalmerBasin2 .swiper-container", {
+                    slidesPerView: 4,
+                    spaceBetween: 0,
+                    loop: false,
+                    navigation: {
+                        nextEl: ".JaisalmerBasin2Next",
+                        prevEl: ".JaisalmerBasin2Prev",
+                    },
+                    breakpoints: {
+                        0: {
+                            slidesPerView: 1,
+                        },
+                        576: {
+                            slidesPerView: 2,
+                        },
+                        768: {
+                            slidesPerView: 3,
+                        },
+                        992: {
+                            slidesPerView: 4,
+                        },
+                        1200: {
+                            slidesPerView: 4,
+                        }
+                    }
+                });
+            };
+        }
+
+        // WhyJoinOIL
+        var WhyJoinOIL = window.matchMedia("(max-width: 1199px)");
+        if (WhyJoinOIL.matches) {
+            if ($(".WhyJoinOIL").length) {
+                var WhyJoinOILSlider = new Swiper(".WhyJoinOIL .swiper-container", {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                    loop: false,
+                    navigation: {
+                        nextEl: ".WhyJoinOILNext",
+                        prevEl: ".WhyJoinOILPrev",
+                    },
+                    breakpoints: {
+                        0: {
+                            slidesPerView: 1,
+                        },
+                        576: {
+                            slidesPerView: 2,
+                        },
+                        768: {
+                            slidesPerView: 2,
+                        },
+                        992: {
+                            slidesPerView: 3,
+                        },
+                        1200: {
+                            slidesPerView: 3,
+                        }
+                    }
+                });
+            };
+        }
+
+        // WhyJoinOIL
+        var FocusDevelopment = window.matchMedia("(max-width: 1199px)");
+        if (FocusDevelopment.matches) {
+            if ($(".FocusDevelopment").length) {
+                var FocusDevelopmentSlider = new Swiper(".FocusDevelopment .swiper-container", {
+                    slidesPerView: 2,
+                    spaceBetween: 0,
+                    loop: false,
+                    navigation: {
+                        nextEl: ".FocusDevelopmentNext",
+                        prevEl: ".FocusDevelopmentPrev",
+                    },
+                    breakpoints: {
+                        0: {
+                            slidesPerView: 1,
+                        },
+                        576: {
+                            slidesPerView: 1,
+                        },
+                        768: {
+                            slidesPerView: 2,
+                        },
+                        992: {
+                            slidesPerView: 2,
+                        },
+                        1200: {
+                            slidesPerView: 3,
+                        }
+                    }
+                });
+            };
+        }
+
+        // depart-logo Logos Slider
+        if ($(".departlogo").length) {
+            var Departlogo = new Swiper(".departlogo .swiper-container", {
+                loop: true,
+                speed: 800,
+                slidesPerView: 7,
+                spaceBetween: 30,
+                autoplay: {
+                    delay: 800,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".departlogoNext",
+                    prevEl: ".departlogoPrev",
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 2,
+                        spaceBetween: 0,
+                    },
+                    576: {
+                        slidesPerView: 3,
+                        spaceBetween: 0,
+                    },
+                    768: {
+                        slidesPerView: 4,
+                        spaceBetween: 0,
+                    },
+                    992: {
+                        slidesPerView: 5,
+                        spaceBetween: 0,
+                    },
+                    1200: {
+                        slidesPerView: 6,
+                        spaceBetween: 0,
+                    },
+                },
+            });
+
+            $(".swiper-button-pause").toggle(
+                function () {
+                    $(this).addClass("play");
+                    Departlogo.autoplay.stop();
+                },
+                function () {
+                    $(this).removeClass("play");
+                    Departlogo.autoplay.start();
+                    return false;
+                }
+            );
+        }
+
+        // community-engagement
+        if ($(".community-engagement").length) {
+            var CommunityEngagement = new Swiper(
+                ".community-engagement .swiper-container", {
+                loop: true,
+                spaceBetween: 0,
+                watchSlidesVisibility: true,
+                watchSlidesProgress: true,
+                slidesPerView: "auto",
+                centeredSlides: true,
+                observeParents: true,
+                observer: true,
+                speed: 1000,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: ".CommunityNext",
+                    prevEl: ".CommunityPrev",
+                },
+            }
+            );
+        }
+
+
+        var BusinessMain, BusinessSub;
+        var currentMode = null; // Track which mode is currently active
+
+        function initDesktopTabs() {
+            if ($(".our-business").length) {
+                var $tabItems = $('.our-business .tab-li-ul li');
+                var $tabLinks = $tabItems.find('a'); // anchor inside li
+                var $tabContents = $('.tabs-contents-container .tabContainer .tabs-contents');
+
+                // Make sure only <a> elements are focusable
+                $tabLinks.attr('tabindex', '0');
+
+                // Initialize first tab as active
+                $tabItems.removeClass('active').first().addClass('active');
+                $tabContents.removeClass('active').hide().first().addClass('active').show();
+
+                var TabsCodeclickDisabled = false;
+
+                $tabLinks.off("mouseenter focus").on("mouseenter focus", function (e) {
+                    var $link = $(this);
+                    var $li = $link.closest('li');
+
+                    if (TabsCodeclickDisabled || $li.hasClass("active")) return;
+
+                    var index = $li.index();
+
+                    $tabItems.removeClass('active');
+                    $li.addClass('active');
+
+                    $tabContents.filter('.active').fadeOut(200, function () {
+                        $(this).removeClass('active');
+                        $tabContents.eq(index).addClass('active').fadeIn(200);
+                    });
+
+                    TabsCodeclickDisabled = true;
+                    setTimeout(function () {
+                        TabsCodeclickDisabled = false;
+                    }, 200);
+                });
+            }
+        }
+
+
+
+        function destroySwiper() {
+            if (BusinessMain) {
+                BusinessMain.destroy(true, true);
+                BusinessMain = null;
+            }
+            if (BusinessSub) {
+                BusinessSub.destroy(true, true);
+                BusinessSub = null;
+            }
+        }
+
+        function initMobileSlider() {
+            BusinessMain = new Swiper(".tab-li-wrap", {
+                centeredSlides: true,
+                centeredSlidesBounds: true,
+                slidesPerView: 3,
+                watchOverflow: true,
+                watchSlidesVisibility: true,
+                watchSlidesProgress: true,
+                navigation: {
+                    nextEl: ".BusinessMainMobileNext",
+                    prevEl: ".BusinessMainMobilePrev",
+                },
+                breakpoints: {
+                    0: { slidesPerView: 1, centeredSlidesBounds: true },
+                    576: { slidesPerView: 2, centeredSlidesBounds: false },
+                    768: { slidesPerView: 2, centeredSlidesBounds: false },
+                    992: { slidesPerView: 3, centeredSlidesBounds: false },
+                },
+            });
+
+            BusinessSub = new Swiper(".tabs-contents-container", {
+                watchOverflow: true,
+                watchSlidesVisibility: true,
+                watchSlidesProgress: true,
+                preventInteractionOnTransition: true,
+                effect: "fade",
+                fadeEffect: { crossFade: true },
+                thumbs: {
+                    swiper: BusinessMain,
+                },
+            });
+
+            BusinessSub.on("slideChangeTransitionStart", function () {
+                BusinessMain.slideTo(BusinessSub.activeIndex);
+            });
+
+            BusinessMain.on("transitionStart", function () {
+                BusinessSub.slideTo(BusinessMain.activeIndex);
+            });
+        }
+
+        function handleResize() {
+            var isDesktop = window.matchMedia("(min-width: 1200px)").matches;
+
+            if (isDesktop && currentMode !== "desktop") {
+                destroySwiper();
+                initDesktopTabs();
+                currentMode = "desktop";
+            } else if (!isDesktop && currentMode !== "mobile") {
+                initMobileSlider();
+                currentMode = "mobile";
+            }
+        }
+
+        // Initial run
+        handleResize();
+
+        // Attach resize event
+        window.addEventListener("resize", function () {
+            // Debounce to avoid excessive triggers
+            clearTimeout(window._resizeTimer);
+            window._resizeTimer = setTimeout(handleResize, 300);
+        });
+
+
+        // global_box_title
+        if ($(".global_box_title").length) {
+            // global_box_title
+            $('.global_box_title').on('click', function () {
+                $('.global_box_title.active, .global-country .ul .li.active').removeClass('active');
+                $(this).addClass('active');
+                $(this).next('.li').addClass('active');
+            });
+        }
+
+        // srch-icon
+if ($(".srch-icon").length) {
+    $(".srch-icon").attr("tabindex", "0"); // Make it focusable if not a button/link
+
+    $(".srch-icon").on("click keydown", function (event) {
+        if (
+            event.type === "click" ||
+            (event.type === "keydown" && (event.key === "Enter" || event.key === " "))
+        ) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(".search-box").slideToggle();
+            $(".srch-icon").toggleClass("active");
+        }
+    });
+}
+        $(document).mouseup(function (e) {
+            var container = $(" .search-icon");
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                $(".search-box").hide();
+            }
+        });
+
+        // base_url
+        if ($("#base_url").length) {
+            var base_url = $("#base_url").val();
+            if (base_url != "" || base_url != "undefined") {
+                var substring = "/hi";
+                //console.log(hindiLang);
+                if (hindiLang.indexOf(substring) !== -1) {
+                    var durl = base_url + "hi/get-visitor-counter-link";
+                } else {
+                    var durl = base_url + "get-visitor-counter-link";
+                }
+                //console.log(durl);
+                $.ajax({
+                    beforeSend: function () {
+                        $(".spinner-border").css("visibility", "visible");
+                    },
+                    url: durl,
+                    method: "post",
+                    context: document.body,
+                    data: {
+                        location: window.location.href
+                    },
+                    cache: false,
+                    success: function (data) {
+                        //console.log(data);
+                        $(".visitCounter").html(data);
+                    },
+                    complete: function () {
+                        $(".spinner-border").css("visibility", "hidden");
+                        //$("#litecontainer").removeAttr('style');
+                    },
+                    error: function (data) {
+                        console.log("Failed Path Entry");
+                    },
+                });
+            }
+        }
+
+        function updateFinancialCounters($wrap, data) {
+            if (!data) {
+                return;
+            }
+            if (typeof data.internal_count !== "undefined") {
+                $wrap.find(".visitor-financial-internal-counter .count").text(data.internal_count);
+            }
+            if (typeof data.external_count !== "undefined") {
+                $wrap.find(".visitor-financial-external-counter .count").text(data.external_count);
+            }
+        }
+
+        function financialCounterUrl(href, countsOnly) {
+            var base_url = $("#base_url").length ? $("#base_url").val() : "";
+            if (!base_url || !href) {
+                return "";
+            }
+            var filename = href.split("/").pop().split("?")[0];
+            var prefix = hindiLang.indexOf("/hi") !== -1 ? "hi/" : "";
+            return base_url + prefix + "files/financial-results-documents/" + filename + (countsOnly ? "/counts" : "");
+        }
+
+        $(".financialData").each(function () {
+            var $link = $(this);
+            var $wrap = $link.closest(".file--application-pdf");
+            var countsUrl = financialCounterUrl($link.attr("href"), true);
+            if (!countsUrl) {
+                return;
+            }
+
+            $.ajax({
+                url: countsUrl,
+                method: "get",
+                cache: false,
+                success: function (data) {
+                    updateFinancialCounters($wrap, data);
+                },
+            });
+        });
+
+        // financialData click counter
+        $(document).on("click", ".financialData", function (event) {
+            var $wrap = $(this).closest(".file--application-pdf");
+            var durl = financialCounterUrl($(this).attr("href"), false);
+            if (!durl) {
+                return;
+            }
+
+            $.ajax({
+                url: durl,
+                method: "get",
+                cache: false,
+                success: function (data) {
+                    updateFinancialCounters($wrap, data);
+                },
+                error: function () {
+                    console.log("Failed to log financial data click");
+                },
+            });
+        });
+
+        //  add class for megamenu design
+        if ($('.main-menu .menuPart nav > ul > li > ul > li > ul').length) {
+            $('.main-menu .menuPart nav > ul > li > ul > li > ul').each(function (index, el) {
+                $(this).parents('ul').parents('li').addClass('megaMenu');
+            });
+        }
+        $('.main-menu .menuPart nav>ul>li:nth-child(2), .main-menu .menuPart nav>ul>li:nth-child(4)').removeClass('megaMenu');
+
+
+        // Navigation
+        $(".main-menu li a").each(function () {
+            if ($(this).next().length) {
+                $(this).parent().addClass("parent");
+            }
+        });
+
+        $('.main-menu li').attr('tabindex', '-1'); // Parent <li> doesn't need tabindex if <a> is focusable
+
+        // Mouse hover
+        $('.main-menu li').hover(
+            function () {
+                $(this).addClass('hover');
+            },
+            function () {
+                $(this).removeClass('hover');
+            }
+        );
+
+        // Focus handling (keyboard)
+        $('.main-menu li').on('focusin', function () {
+            $(this).addClass('hover focus');
+        });
+
+        $('.main-menu li').on('focusout', function () {
+            const $this = $(this);
+            setTimeout(function () {
+                const activeEl = document.activeElement;
+                const stillInside = $.contains($this[0], activeEl);
+                if (!stillInside) {
+                    $this.removeClass('hover focus');
+                }
+            }, 0);
+        });
+
+        // Escape key support
+        $(document).on('keydown', function (e) {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                $('.main-menu li.hover, .main-menu li.focus').removeClass('hover focus');
+            }
+        });
+
+        // Responsive Tabing Script
+        if ($(".resTab").length) {
+            $(".resTab").responsiveTabs({
+                rotate: false,
+                startCollapsed: "tab", //accordion
+                collapsible: "accordion", //accordion
+                scrollToAccordion: true,
+                scrollToAccordionOnLoad: false,
+            });
+        }
+
+        if ($(".marqueeScrollingWrap").length) {
+            var $quickLinks = $(".marqueeScrollingWrap .QuickLinks .cta-link");
+
+            // Make focusable
+            $quickLinks.attr("tabindex", "0");
+
+            // Toggle dropdown on mouse click
+            $quickLinks.on("click", function () {
+                $("body").toggleClass("custom-dropdown-open");
+            });
+
+            // Toggle dropdown on keyboard Enter or Space
+            $quickLinks.on("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault(); // Prevent scrolling when Space is pressed
+                    $("body").toggleClass("custom-dropdown-open");
+                }
+            });
+        }
+
+
+        // common tabs 
+        if ($(".common-tabs-li").length) {
+            $('.common-tabs-li:first-child').addClass('active');
+            $('.common-tabs-content:first-child').addClass('active');
+
+            $('.common-tabs-li').click(function () {
+                var tab_id = $(this).attr('common-tabs-attr');
+                $('.common-tabs-li').removeClass('active');
+                $('.common-tabs-content').removeClass('active');
+
+                $(this).addClass('active');
+                $("#" + tab_id).addClass('active');
+            })
+
+        }
+        $('.c-accordion-box:first-child').addClass('c-active');
+        $(function () {
+            $('.c-accordion-box').click(function () {
+                $(this).toggleClass(' c-active ');
+                $(this).siblings().removeClass(' c-active ');
+                $('.c-accordion-content-text').stop().slideUp();
+                $('.c-active .c-accordion-content-text').stop().slideDown();
+                return false;
+            });
+        });
+
+        if ($(".startup").length) {
+            // Hide all tab contents initially, show first
+            $(".startup .tab_content").hide();
+            $(".startup .tab_content:first").show();
+
+            // Make tabs and drawers focusable and give them roles
+            $(".startup ul.tabs li").attr("tabindex", "0").attr("role", "tab");
+            $(".startup .tab_drawer_heading").attr("tabindex", "0").attr("role", "button");
+
+            // Function to activate tab
+            function activateTab(tabId) {
+                $(".startup .tab_content").hide();
+                $("#" + tabId).fadeIn();
+
+                $(".startup ul.tabs li").removeClass("active");
+                $(".startup ul.tabs li[rel='" + tabId + "']").addClass("active");
+
+                $(".startup .tab_drawer_heading").removeClass("d_active");
+                $(".startup .tab_drawer_heading[rel='" + tabId + "']").addClass("d_active");
+            }
+
+            // Mouse click for tabs
+            $(".startup ul.tabs li").click(function () {
+                var tabId = $(this).attr("rel");
+                activateTab(tabId);
+            });
+
+            // Mouse click for drawers
+            $(".startup .tab_drawer_heading").click(function () {
+                var tabId = $(this).attr("rel");
+                activateTab(tabId);
+            });
+
+            // ✅ Auto-activate tab on focus (when tabbing through)
+            $(".startup ul.tabs li").on("focus", function () {
+                var tabId = $(this).attr("rel");
+                activateTab(tabId);
+            });
+
+            // ✅ Auto-activate drawer tab on focus
+            $(".startup .tab_drawer_heading").on("focus", function () {
+                var tabId = $(this).attr("rel");
+                activateTab(tabId);
+            });
+        }
+
+        // skipContent
+        $(".skipContent").on("click", function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $("html, body")
+                .stop()
+                .animate({
+                    scrollTop: $target.offset().top,
+                },
+                    1000,
+                    "swing",
+                    function () {
+                        window.location.hash = target;
+                    }
+                );
+        });
+
+        $("body").removeClass("noJS").addClass("hasJS");
+        // $(this).scrollTop(0);
+        getWidth();
+
+        // marqueeScrolling
+        if ($(".marqueeScrolling li").length > 1) {
+            var $mq = $(".marquee").marquee({
+                speed: 15000,
+                gap: 0,
+                duplicated: false,
+                pauseOnHover: true,
+            });
+            $(".btnMPause").on("click", function (event) {
+                event.preventDefault();
+                $(this).toggleClass("play");
+                $(this).children(".fa").toggleClass("fa-pause fa-play");
+                $(this).hasClass("play") ? $mq.marquee("resume") : $mq.marquee("pause");
+            });
+        }
+        // searchBox
+        $(document).mouseup(function (e) {
+            var container = $(" .searchContainer");
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                $(".searchBox").hide();
+            }
+        });
+
+        // Message on Cookie Disabled
+       /*  $.cookie("cookieWorked", "yes", {
+            path: "/",
+            sameSite: "Lax",
+            secure: true
+        }); */
+        document.cookie = "cookieWorked=yes; path=/; Secure; HttpOnly; SameSite=Lax";
+
+        if ($.cookie("cookieWorked") == "yes") { } else {
+            if ($("div.jsRequired").length == 0) {
+                $("body").prepend(
+                    '<div class="jsRequired">Cookies are not enabled on your browser. Need to adjust this in your browser security preferences. Please enable cookies for better user experience.</div>'
+                );
+            }
+        }
+
+        let isMobileView = null;
+
+        // Insert a placeholder for the menu to return to
+        if ($('#menu-placeholder').length === 0) {
+            $(".main-menu .menuPart nav").prepend('<div id="menu-placeholder" style="display: none;"></div>');
+        }
+
+        // Function to bind submenu toggle behavior
+        function bindSubmenuToggle() {
+            // $('.child-trigger').off('click').on('click', function () {
+            //     $(this).parent().siblings('li').find('.child-trigger').removeClass('child-open');
+            //     $(this).parent().siblings('li').find('ul').slideUp(250);
+            //     $(this).toggleClass('child-open');
+            //     $(this).next('ul').slideToggle(250);
+            //     return false;
+            // });
+                $('.child-trigger').off('click').on('click', function () {
+        // Set height of current trigger based on <a> height
+        var aHeight = $(this).prev('a').innerHeight();
+        $(this).css('height', aHeight);
+
+        // Close other submenus
+        $(this).parent().siblings('li').find('.child-trigger').removeClass('child-open');
+        $(this).parent().siblings('li').find('ul').slideUp(250);
+
+        // Toggle current submenu
+        $(this).toggleClass('child-open');
+        $(this).next('ul').slideToggle(250);
+        return false;
+    });
+        }
+
+        function handleResponsiveMenu() {
+            const windowWidth = $(window).width();
+
+            if (windowWidth <= 1199) {
+                if (isMobileView === true) return; // Already in mobile view
+                isMobileView = true;
+
+                // Move menu into drawer
+                $(".main-menu .menuPart nav>ul").each(function () {
+                    if (!$(this).hasClass('moved')) {
+                        $(this).appendTo('.drawer-menu').addClass('moved');
+                    }
+                });
+
+                // Add submenu classes and triggers
+                $('.drawer-menu ul li').has('ul').addClass("submenu");
+                $('.submenu').each(function () {
+                    if ($(this).find('.child-trigger').length === 0) {
+                        $(this).children('a').after('<div class="child-trigger"><span></span></div>');
+                    }
+                });
+
+                // Set child-trigger height for alignment
+                // setTimeout(function () {
+                //     $(".submenu a").each(function () {
+                //         var AHeight = $(this).innerHeight();
+                //         $(this).next('.child-trigger').css('height', AHeight);
+                //     });
+                // }, 200);
+
+                // Bind toggle buttons for drawer open/close
+                $(".toggle-btn-menu, .menu-overlay").off('click').on('click', function () {
+                    $("body, html").toggleClass("menu-open");
+                });
+
+                // Bind submenu toggle
+                bindSubmenuToggle();
+
+            } else {
+                if (isMobileView === false) return; // Already in desktop view
+                isMobileView = false;
+
+                // Move menu back to original position
+                $(".drawer-menu .moved").each(function () {
+                    $('#menu-placeholder').after($(this).removeClass('moved'));
+                });
+
+                // Cleanup dynamic elements
+                $(".submenu").removeClass("submenu");
+                $(".child-trigger").remove();
+                $(".child-open").removeClass("child-open");
+                $("ul").removeAttr("style");
+                $("body, html").removeClass("menu-open");
+            }
+        }
+
+        // Initial run
+        handleResponsiveMenu();
+
+        // Run on window resize
+        $(window).on('resize', function () {
+            handleResponsiveMenu();
+        });
+
+        // Back to Top function
+        if ($("#backtotop").length) {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 120) {
+                    $("#backtotop").fadeIn("250").css("display", "block");
+                } else {
+                    $("#backtotop").fadeOut("250");
+                }
+            });
+
+            $("#backtotop").click(function () {
+                $("html, body").animate({ scrollTop: 0 }, "200");
+                return false;
+            });
+
+            // Function to update the tooltip based on language
+            function updateTooltip() {
+                if ($("html").attr("lang") === "hi" || $("body").hasClass("lang-hi")) {
+                    $("#backtotop").attr("title", "ऊपर वापस जाएं‚");
+                } else {
+                    $("#backtotop").attr("title", "Back to Top");
+                }
+            }
+        }
+
+        /* play and pause for all sliders */
+        function toggleSwiper(swiper, action) {
+            if (action === "stop") swiper.autoplay.stop();
+            else if (action === "start") swiper.autoplay.start();
+        }
+
+        // Toggle individual Swipers
+        $(".PlayBtnSlider").each(function () {
+            $(this).attr("title", LagHindi ? "रोकें" : "Pause");
+        });
+
+        $(".PlayBtnSlider").on("click", function () {
+            const isPaused = $(this).toggleClass("paused").hasClass("paused");
+            const swiperId = $(this).data("swiper");
+            const swiperInstances = {
+                CommunityEngagement,
+                Departlogo,
+                AwardsAccolades,
+                CSRProjectNew,
+                Testimonials,
+
+            };
+
+            const swiperInstance = swiperInstances[swiperId];
+            if (swiperInstance)
+                toggleSwiper(swiperInstance, isPaused ? "stop" : "start");
+            $(this).attr(
+                "title",
+                LagHindi
+                    ? isPaused
+                        ? "चलायें"
+                        : "रोकें"
+                    : isPaused
+                        ? "Play"
+                        : "Pause"
+            );
+        });
+
+jQuery(function () {
+    let GloriousJourneyThumb;
+    let GloriousJourneySlides;
+    let isVertical = window.innerWidth >= 1200;
+
+    function updatePlayButtonTitle($btn, isPlaying) {
+        const lang = jQuery("html").attr("lang"); // Get language from HTML tag
+        let title;
+
+        if (lang === "hi") {
+            title = isPlaying ? "रोकें" : "चलाएं"; // Pause / Play in Hindi
+        } else {
+            title = isPlaying ? "Pause" : "Play"; // Default English
+        }
+
+        $btn.attr("title", title);
+    }
+
+    function initSwipers() {
+        GloriousJourneyThumb = new Swiper(".glorious-legacy-year-container", {
+            centeredSlides: true,
+            centeredSlidesBounds: true,
+            direction: isVertical ? "vertical" : "horizontal",
+            spaceBetween: 0,
+            slidesPerView: 5,
+            freeMode: false,
+            watchSlidesVisibility: true,
+            watchSlidesProgress: true,
+            watchOverflow: true,
+            loop: true
+        });
+
+        GloriousJourneySlides = new Swiper(".glorious-legacy-text-container", {
+            direction: "horizontal",
+            spaceBetween: 0,
+            effect: "fade",
+            autoplay: {
+                delay: 1500,
+                disableOnInteraction: false,
+            },
+            speed: 500,
+            fadeEffect: {
+                crossFade: true,
+            },
+            loop: true,
+            navigation: {
+                nextEl: ".GloriousLegacyNext",
+                prevEl: ".GloriousLegacyPrev"
+            },
+            keyboard: {
+                enabled: true,
+            },
+            thumbs: {
+                swiper: GloriousJourneyThumb
+            },
+            on: {
+                init: function () {
+                    const $btn = jQuery("#GloriousJourneyPlayBtnSlider");
+                    const isPlaying = this.autoplay.running;
+                    $btn.removeClass("paused playing").addClass(isPlaying ? "playing" : "paused");
+                    updatePlayButtonTitle($btn, isPlaying);
+                }
+            }
+        });
+
+        // Bind play/pause toggle button
+        jQuery("#GloriousJourneyPlayBtnSlider").off("click").on("click", function () {
+            const $btn = jQuery(this);
+            const isPlaying = GloriousJourneySlides.autoplay.running;
+
+            if (isPlaying) {
+                GloriousJourneySlides.autoplay.stop();
+            } else {
+                GloriousJourneySlides.autoplay.start();
+            }
+
+            $btn.removeClass("paused playing").addClass(isPlaying ? "paused" : "playing");
+            updatePlayButtonTitle($btn, !isPlaying);
+        });
+    }
+
+    function destroySwipers() {
+        if (GloriousJourneyThumb) GloriousJourneyThumb.destroy(true, true);
+        if (GloriousJourneySlides) GloriousJourneySlides.destroy(true, true);
+    }
+
+    // Initial load
+    initSwipers();
+
+    // Handle responsive direction change
+    jQuery(window).on("resize", function () {
+        const newIsVertical = window.innerWidth >= 1200;
+        if (newIsVertical !== isVertical) {
+            isVertical = newIsVertical;
+            destroySwipers();
+            initSwipers();
+        }
+    });
+});
+
+        if ($('.ArrowPrev').length || $('.ArrowNext').length) {
+            var ArrowLang = $('html').attr('lang');
+          
+            var Arrowtitles = {
+              en: {
+                prev: "Previous",
+                next: "Next"
+              },
+              hi: {
+                prev: "पिछला",
+                next: "अगला"
+              }
+            };
+          
+            var currentTitles = Arrowtitles[ArrowLang] || Arrowtitles['en'];
+          
+            function makeAccessible($el, title) {
+              $el
+                .attr('title', title)
+                .attr('tabindex', '0')
+                .attr('role', 'button')
+                .on('keydown', function(e) {
+                  if (e.key === 'Enter' || e.key === ' ' || e.keyCode === 13 || e.keyCode === 32) {
+                    e.preventDefault();
+                    $(this).click(); // Only click THIS element, not all
+                  }
+                });
+            }
+          
+            // Loop through each ArrowPrev and ArrowNext individually
+            $('.ArrowPrev').each(function () {
+              makeAccessible($(this), currentTitles.prev);
+            });
+          
+            $('.ArrowNext').each(function () {
+              makeAccessible($(this), currentTitles.next);
+            });
+          }
+          
+          $('.border-li-design li a.pdf-icon-svg, ul.border-li-design-2 li a.pdf-icon-svg, .file--application-pdf a, .file--application-pdf-1').each(function() {
+            $(this).append('<img class="PDFIcon" src="/themes/oilindia/images/pdf-icon-img.svg" alt="PDF file that opens in new window." aria-label="PDF file that opens in new window.">');
+          });
+          // projects-Underway slider
+            if ($(".projects-Underway-section").length) {
+                var EducationSliderThree = new Swiper(".projects-Underway-slider .swiper-container", {
+                    slidesPerView: 4,
+                    spaceBetween: 24,
+                    loop: true,
+                    navigation: {
+                        nextEl: ".ProjectUnderwaySliderNext",
+                        prevEl: ".ProjectUnderwaySliderPrev",
+                    },
+                    breakpoints: {
+                        1: {
+                            slidesPerView: 1,
+                        },
+                        576: {
+                            slidesPerView: 2,
+                        },
+                        768: {
+                            slidesPerView: 3,
+                        },
+                        1200: {
+                            slidesPerView: 4,
+                        }
+                    }
+                });
+            };
+    });
+
+    /*================= On Document Load End =================*/
+
+    // To open Internal link Dialogbox for target_blank
+    $('a[target="_blank"]').addClass("taggetBlankLink");
+
+    /*================= On Window Resize Start =================*/
+    $(window).bind("resize orientationchange", function () {
+        getWidth();
+    });
+
+    function getWidth() {
+        ww = document.body.clientWidth;
+        if (ww > wideScreen) {
+            $("body").removeClass("device").addClass("desktop widerDesktop");
+        }
+        if (ww > mobilePort && ww <= wideScreen) {
+            $("body").removeClass("device widerDesktop").addClass("desktop");
+        }
+        if (ww <= mobilePort) {
+            $("body").removeClass("desktop widerDesktop").addClass("device");
+        }
+        if (ww > 767 && ww < 1025) {
+            $("body").addClass("ipad");
+        } else {
+            $("body").removeClass("ipad");
+        }
+    }
+})(jQuery);
+
+function validate() {
+    return false;
+}
+// glorious-legacy-year-container
+// jQuery(function () {
+//     var GloriousJourneyThumb = new Swiper(".glorious-legacy-year-container", {
+//         centeredSlides: true,
+//         centeredSlidesBounds: true,
+//         direction: "horizontal",
+//         spaceBetween: 0,
+//         slidesPerView: 5,
+//         freeMode: false,
+//         watchSlidesVisibility: true,
+//         watchSlidesProgress: true,
+//         watchOverflow: true,
+//         loop: true,
+//         breakpoints: {
+//             768: {
+//                 slidesPerView: 5,
+//             },
+//             992: {
+//                 slidesPerView: 5,
+//             },
+//             1200: {
+//                 direction: "vertical",
+//                 slidesPerView: 5
+//             }
+//         }
+//     });
+//     var GloriousJourneySlides = new Swiper(".glorious-legacy-text-container", {
+//         direction: "horizontal",
+//         spaceBetween: 0,
+//         effect: "fade",
+//         autoplay: {
+//             delay: 1500,
+//             disableOnInteraction: false,
+//         },
+
+//         speed: 500,
+//         fadeEffect: {
+//             crossFade: true,
+//         },
+//         loop: true,
+//         navigation: {
+//             nextEl: ".GloriousLegacyNext",
+//             prevEl: ".GloriousLegacyPrev"
+//         },
+//         keyboard: {
+//             enabled: true,
+//         },
+//         thumbs: {
+//             swiper: GloriousJourneyThumb
+//         }
+//     });
+//     // GloriousJourneySlides.on("slideChangeTransitionStart", function () {
+//     //     GloriousJourneyThumb.slideTo(GloriousJourneySlides.activeIndex);
+//     // });
+//     // GloriousJourneyThumb.on("transitionStart", function () {
+//     //     GloriousJourneySlides.slideTo(GloriousJourneyThumb.activeIndex);
+//     // });
+// });
+
+
+
+
+// equalheight
+equalheight = function (container) {
+
+    var currentTallest = 0,
+        currentRowStart = 0,
+        rowDivs = new Array(),
+        $el,
+        topPosition = 0;
+    $(container).each(function () {
+
+        $el = $(this);
+        $($el).height('auto')
+        topPostion = $el.position().top;
+
+        if (currentRowStart != topPostion) {
+            for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
+                rowDivs[currentDiv].height(currentTallest);
+            }
+            rowDivs.length = 0; // empty the array
+            currentRowStart = topPostion;
+            currentTallest = $el.height();
+            rowDivs.push($el);
+        } else {
+            rowDivs.push($el);
+            currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
+        }
+        for (currentDiv = 0; currentDiv < rowDivs.length; currentDiv++) {
+            rowDivs[currentDiv].height(currentTallest);
+        }
+    });
+}
+
+$(document).ready(function () {
+    equalheight('.testimonials-box .top-content');
+});
+$(window).on('load', function () {
+    equalheight('.testimonials-box .top-content');
+    $('.loader').fadeOut(2000);
+});
+$(window).resize(function () {
+    equalheight('.testimonials-box .top-content');
+    // location.reload();
+});
+
+// Background observer
+var backgroundObserver = lozad(".lozad-background", {
+    threshold: 0.1,
+});
+backgroundObserver.observe();
+
+// browser check
+if (!navigator.userAgent.includes('Chrome') && navigator.userAgent.includes('Safari')) {
+    $('body').addClass('safari-here');
+} else {
+    $('body').removeClass('safari-here');
+}
+
+// datepicker-jquery-ui
+$(".datepicker-custom-new").datepicker({
+    changeMonth: true,
+    changeYear: true,
+    dateFormat: 'dd-mm-yy',
+});
+
+/* Counter */
+function inVisible(element) {
+
+    var WindowTop = $(window).scrollTop();
+    var WindowBottom = WindowTop + $(window).height();
+    var ElementTop = element.offset().top;
+    var ElementBottom = ElementTop + element.height();
+    if ((ElementBottom <= WindowBottom) && ElementTop >= WindowTop)
+        animate(element);
+}
+
+if ($(".ValueAnimated").length) {
+    function animate(element) {
+
+        if (!element.hasClass('ms-animated')) {
+            var maxval = element.data('max');
+            var html = element.html();
+            element.addClass("ms-animated");
+            $({
+                countNum: element.html()
+            }).animate({
+                countNum: maxval
+            }, {
+                //duration 5 seconds
+                duration: 3000,
+                easing: 'linear',
+                step: function () {
+                    element.html(Math.floor(this.countNum) + html);
+                },
+                complete: function () {
+                    element.html(this.countNum + html);
+                }
+            });
+        }
+
+    }
+
+    $(function () {
+        $(window).scroll(function () {
+            $(".ValueAnimated[data-max]").each(function () {
+                inVisible($(this));
+            });
+        })
+    });
+}
+if ($(".HSEVideo").length) {
+    window.addEventListener('load', async () => {
+        let HSEvideo = document.querySelector('video[muted][autoplay].HSEVideo');
+        try {
+            await HSEvideo.play();
+        } catch (err) {
+            HSEvideo.controls = true;
+        }
+    });
+}
+/* function checkname() {
+    var pattern = /^[a-zA-Z0-9 -%&@#?'';:=()_.,\/]+$/;
+    var sname = $('#edit-startup-name').val();
+    var validname = pattern.test(sname);
+    if (sname == '') {
+        $('#startname_err').html('This field is required');
+        return 1;
+    } else if (!validname) {
+        $('#startname_err').html('Please enter proper name of start-up.');
+        return 1;
+    } else {
+        $('#startname_err').html('');
+        return 0;
+    }
+}
+function applicantname() {
+    var pattern = /^[a-zA-Z0-9 -%&@#?'';:=()_.,\/]+$/;
+    var appname = $('#edit-applicant-name').val();
+    var validapp = pattern.test(appname);
+    if (appname == '') {
+        $('#appname_err').html('This field is required');
+        return 1;
+    } else if (!validapp) {
+        $('#appname_err').html('Please enter proper applicant name.');
+        return 1;
+    } else {
+        $('#appname_err').html('');
+        return 0;
+    }
+}
+function applicantmobile() {
+    if (!$.isNumeric($("#edit-applicant-mobile").val())) {
+        $("#appmobile_err").html("only number is allowed");
+        return 1;
+    } else if ($("#edit-applicant-mobile").val().length != 10) {
+        $("#appmobile_err").html("10 digit required");
+        return 1;
+    }
+    else {
+        $("#appmobile_err").html("");
+        return 0;
+    }
+}
+function applicantaddress() {
+    var pattern = /^[a-zA-Z0-9 -%&@#?'';:=()_.,\/]+$/;
+    var appaddress = $('#edit-applicant-address').val();
+    var validaddress = pattern.test(appaddress);
+    if (appaddress == '') {
+        $('#appaddress_err').html('This field is required');
+        return 1;
+    } else if (!validaddress) {
+        $('#appaddress_err').html('Please enter proper applicant address.');
+        return 1;
+    } else {
+        $('#appaddress_err').html('');
+        return 0;
+    }
+}
+function incorporated(incorporated_val) {
+    //var incorporated_val = $(this).val();
+    if(incorporated_val == 'Yes'){
+        $('.dateOfstratup').removeAttr('disabled');
+        var startup_val = $('#edit-date-of-startup').val();
+        if(startup_val == ''){
+            $('#dateOfstratup_err').html('This field is required');
+            return 1;
+        }else{
+            $('#dateOfstratup_err').html('');
+            return 0;
+        }
+    }else{
+        $('.dateOfstratup').attr('disabled','disabled');
+        $('#dateOfstratup_err').html('');
+        return 0;
+    }
+}
+function recognised(recognised_val) {
+    var pattern = /^[a-zA-Z0-9 -%&@#?'';:=()_.,\/]+$/;
+    
+    if(recognised_val == 'Yes'){
+        $('.dpiitRegistration').removeAttr('disabled');
+        $('.dpiitDate').removeAttr('disabled');
+        $('.dpiitCertificate').removeAttr('disabled');
+        var maxsize = 20971520;
+        $('#edit-dpiit-certificate').change(function(){
+            var certificatefile = this.files[0];
+            certificatename = certificatefile.name;
+            certificatesize = certificatefile.size;
+            certificatetype = certificatefile.type;
+            if(certificatename == ''){
+                $('#dpiitCertificate_err').html('This field is required');
+                return 1;
+            }else if(certificatetype != 'application/pdf'){
+                $('#dpiitCertificate_err').html('This field allow only pdf files');
+                return 1;
+            }else if(certificatesize >= maxsize){
+                $('#dpiitCertificate_err').html('File too large. File must be less than 20 MB');
+                return 1;
+            }else{
+                $('#dpiitCertificate_err').html('');
+                return 0;
+            }
+        });
+        var date_val = $('#edit-dpiit-date').val();
+        var registration_val = $('#edit-dpiit-registration').val();
+        var validregistration = pattern.test(registration_val);
+        if(date_val == '' &&  registration_val == ''){
+            $('#dpiitDate_err').html('This field is required');
+            $('#dpiitRegistration_err').html('This field is required');
+            $('#dpiitCertificate_err').html('This field is required');
+            return 1;
+        }else if(registration_val == ''){
+            $('#dpiitRegistration_err').html('This field is required');
+            return 1;
+        }else if(date_val == ''){
+            $('#dpiitDate_err').html('This field is required');
+            return 1;
+        }else if(!validregistration) {
+            $('#dpiitRegistration_err').html('Please enter proper registration number.');
+            return 1;
+        }else{
+            $('#dpiitRegistration_err').html('');
+            $('#dpiitDate_err').html('');
+            return 0;
+        }
+        
+    }else{
+        $('.dpiitRegistration').attr('disabled','disabled');
+        $('.dpiitDate').attr('disabled','disabled');
+        $('.dpiitCertificate').attr('disabled','disabled');
+        $('#dpiitRegistration_err').html('');
+        $('#dpiitCertificate_err').html('');
+        $('#dpiitDate_err').html('');
+        return 0;
+    }
+}
+function doreceived(doreceived_money_val){
+    var pattern = /^[a-zA-Z0-9 -%&@#?'';:=()_.,\/]+$/;
+    if(doreceived_money_val == 'Yes'){                   
+        $('.provideDetails').removeAttr('disabled');
+        var provide_val = $('#edit-provide-details').val();
+        var validprovide = pattern.test(provide_val);
+        if(provide_val == ''){
+            $('#provideDetails_err').html('This field is required');
+            return 1;
+        }else if(!validprovide) {
+            $('#provideDetails_err').html('Please enter proper provide details.');
+            return 1;
+        }else{
+            $('#provideDetails_err').html('');
+            return 0;
+        }
+    }else{
+        $('.provideDetails').attr('disabled','disabled');
+        $('#provideDetails_err').html('');
+        return 0;
+    }
+}
+function issued(issued_poc_val){
+    if(issued_poc_val == 'Yes'){
+        $('.fileOther').removeAttr('disabled');
+        var maxsize    = 20971520;
+        $('#edit-file-other').change(function(){
+            var file = this.files[0];
+            fname = file.name;
+            fsize = file.size;
+            ftype = file.type;
+            if(fname == ''){
+                $('#fileOther_err').html('This field is required');
+                return 1;
+            }else if(ftype != 'application/pdf'){
+                $('#fileOther_err').html('This field allow only pdf files');
+                return 1;
+            }else if(fsize >= maxsize){
+                $('#fileOther_err').html('File too large. File must be less than 20 MB');
+                return 1;
+            }else{
+                $('#fileOther_err').html('');
+                return 0;
+            }
+        });
+        
+    }else{
+        $('.fileOther').attr('disabled','disabled');
+        $('#fileOther_err').html('');
+        return 0;
+    }
+} */
+// function issued_file(){
+//     $('input[type=radio][name=issued_poc]').change(function(e){
+//         e.preventDefault();
+//         var issued_poc_val = $(this).val();
+//         if(issued_poc_val == 'Yes'){
+//             $('.fileOther').removeAttr('disabled');
+//             return true;
+//         }else{
+//             $('.fileOther').attr('disabled','disabled');
+//             return false;
+//         }
+//     });
+//     var file = $('#edit-file-other').files[0];
+//     console.log(file);
+//     fname = file.name;
+//     if(fname == ''){
+//         return true;
+//     }else{
+//         return false;
+//     }
+
+// }
+function doreceived_money() {
+    $('input[type=radio][name=doreceived_money]').change(function (e) {
+        e.preventDefault();
+        var doreceived_money_val = $(this).val();
+        if (doreceived_money_val == 'Yes') {
+            $('.provideDetails').removeAttr('disabled');
+            return true;
+        } else {
+            $('.provideDetails').attr('disabled', 'disabled');
+            return false;
+        }
+    });
+}
+
+function incorporated_last_two() {
+    $('input[type=radio][name=incorporated_last_two]').change(function (e) {
+        var incorporated_val = $(this).val();
+        if (incorporated_val == 'Yes') {
+            //$('.dateOfstratup').removeAttr('disabled');
+            return true;
+        } else {
+            //$('.dateOfstratup').attr('disabled','disabled');
+            return false;
+        }
+    });
+}
+function stripHtml(value) {
+    // remove html tags and space chars
+    return value.replace(/<.[^<>]*?>/g, ' ').replace(/&nbsp;|&#160;/gi, ' ')
+        // remove punctuation
+        .replace(/[.(),;:!?%#$'"_+=\/-]*/g, '');
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const currentDomain = window.location.hostname;
+    const htmlLang = document.documentElement.lang || 'en';
+
+    const messages = {
+        en: {
+            externalConfirmText: 'You are about to proceed to an external website. Click YES to proceed.',
+            switchLangText: 'You are about to proceed to translating language. Click YES to proceed.',
+            yes: 'Yes',
+            no: 'No'
+        },
+        hi: {
+            externalConfirmText: 'आप एक बाहरी वेबसाइट पर जाने वाले हैं। आगे बढ़ने के लिए हाँ पर क्लिक करें.',
+            switchLangText: 'आप भाषा का अनुवाद करने के लिए आगे बढ़ने वाले हैं। आगे बढ़ने के लिए हाँ पर क्लिक करें.',
+            yes: 'हाँ',
+            no: 'नहीं'
+        }
+    };
+
+    const lang = htmlLang.toLowerCase().startsWith('hi') ? 'hi' : 'en';
+
+    const links = document.querySelectorAll('a[href]');
+
+    links.forEach(link => {
+        link.addEventListener('click', (event) => {
+            const href = link.getAttribute('href');
+    
+            // Skip links that contain '#' or are javascript:void
+            if (
+                !href || 
+                href.includes('#') || 
+                href.trim().toLowerCase() === 'javascript:void(0);' ||
+                href.trim().toLowerCase().startsWith('javascript:')
+            ) {
+                return;
+            }
+    
+            if (link.hasAttribute('data-fancybox')) {
+                // Skip confirmation for data-fancybox links
+                return;
+            }
+    
+            const url = new URL(link.href, window.location.origin);
+            const isLanguageLink = link.classList.contains('language-link');
+    
+            if (isLanguageLink) {
+                event.preventDefault();
+                showCustomConfirm(messages[lang].switchLangText, messages[lang].yes, messages[lang].no, () => {
+                    window.location.href = link.href;
+                });
+            } else if (url.hostname !== currentDomain) {
+                event.preventDefault();
+                showCustomConfirm(messages[lang].externalConfirmText, messages[lang].yes, messages[lang].no, () => {
+                    window.open(link.href, '_blank');
+                });
+            }
+        });
+    });
+
+    function showCustomConfirm(message, yesText, noText, onYes) {
+        const overlay = document.createElement('div');
+        overlay.classList.add('confirm-overlay');
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('tabindex', '-1');
+
+        const dialog = document.createElement('div');
+        dialog.classList.add('confirm-dialog');
+        dialog.setAttribute('role', 'document');
+
+        const msg = document.createElement('p');
+        msg.textContent = message;
+        msg.id = 'confirmMessage';
+        msg.classList.add('confirmMessage');
+        dialog.setAttribute('aria-labelledby', 'confirmMessage');
+
+        const yesBtn = document.createElement('button');
+        yesBtn.textContent = yesText;
+        yesBtn.setAttribute('type', 'button');
+        yesBtn.classList.add('button');
+
+        const noBtn = document.createElement('button');
+        noBtn.textContent = noText;
+        noBtn.setAttribute('type', 'button');
+        noBtn.classList.add('button');
+
+        dialog.appendChild(msg);
+        dialog.appendChild(yesBtn);
+        dialog.appendChild(noBtn);
+        overlay.appendChild(dialog);
+        document.body.appendChild(overlay);
+
+        yesBtn.focus();
+
+        yesBtn.addEventListener('click', () => {
+            cleanup();
+            onYes();
+        });
+
+        noBtn.addEventListener('click', () => {
+            cleanup();
+        });
+
+        overlay.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'Tab':
+                    trapFocus(e, yesBtn, noBtn);
+                    break;
+                case 'Escape':
+                    e.preventDefault();
+                    cleanup();
+                    break;
+                case 'Enter':
+                case ' ':
+                    if (document.activeElement === yesBtn) {
+                        e.preventDefault();
+                        cleanup();
+                        onYes();
+                    } else if (document.activeElement === noBtn) {
+                        e.preventDefault();
+                        cleanup();
+                    }
+                    break;
+            }
+        });
+
+        function cleanup() {
+            document.body.removeChild(overlay);
+        }
+
+        function trapFocus(event, firstElem, secondElem) {
+            const focusable = [firstElem, secondElem];
+            const focusedIndex = focusable.indexOf(document.activeElement);
+            if (event.shiftKey) {
+                if (focusedIndex === 0 || focusedIndex === -1) {
+                    event.preventDefault();
+                    focusable[focusable.length - 1].focus();
+                }
+            } else {
+                if (focusedIndex === focusable.length - 1) {
+                    event.preventDefault();
+                    focusable[0].focus();
+                }
+            }
+        }
+    }
+});
+
+
+if ($(".materiality-assessment-process").length) {
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let activeElement = null;
+
+        function activateElement(elementId) {
+            // Remove active class from current active elements
+            document.querySelectorAll(".circulin.active, .lis.active").forEach(el => {
+                el.classList.remove("active");
+            });
+
+            // Hide all popup-text elements
+            document.querySelectorAll(".popup-text").forEach(el => {
+                el.style.display = "none";
+            });
+
+            // Add active class to the corresponding elements
+            const targetCirculin = document.querySelector(`.circulin#${elementId}`);
+            const targetLis = document.querySelector(`.lis#${elementId}`);
+
+            if (targetCirculin) {
+                targetCirculin.classList.add("active");
+
+                // Show the popup-text inside the active circulin
+                const popupText = targetCirculin.querySelector(".popup-text");
+                if (popupText) {
+                    popupText.style.display = "block";
+                }
+            }
+
+            if (targetLis) targetLis.classList.add("active");
+
+            // Set the current active element
+            activeElement = targetCirculin || targetLis;
+        }
+
+        // Add event listeners to circulins for hover
+        document.querySelectorAll(".circulin").forEach(circulin => {
+            circulin.addEventListener("mouseover", function (e) {
+                e.stopPropagation();
+                activateElement(circulin.id);
+            });
+
+            circulin.addEventListener("mouseout", function () {
+                // Hide popup-text and remove active class when mouse leaves
+                const popupText = circulin.querySelector(".popup-text");
+                if (popupText) {
+                    popupText.style.display = "none";
+                }
+                circulin.classList.remove("active");
+            });
+        });
+
+        // Add event listeners to lis elements for hover
+        document.querySelectorAll(".lis").forEach(lis => {
+            lis.addEventListener("mouseover", function (e) {
+                e.stopPropagation();
+                activateElement(lis.id);
+            });
+
+            lis.addEventListener("mouseout", function () {
+                // Hide popup-text and remove active class when mouse leaves
+                const popupText = lis.querySelector(".popup-text");
+                if (popupText) {
+                    popupText.style.display = "none";
+                }
+                lis.classList.remove("active");
+            });
+        });
+
+        // Hide popup-text and remove active classes when clicking outside any circulin or lis
+        document.addEventListener("click", function () {
+            document.querySelectorAll(".popup-text").forEach(el => {
+                el.style.display = "none";
+            });
+            document.querySelectorAll(".circulin.active, .lis.active").forEach(el => {
+                el.classList.remove("active");
+            });
+        });
+    });
+
+
+
+const $tabs = $('.tabs-nav .tabs');
+const $tabContent = $('.tabs-stage .tab-content');
+
+// Initial setup: show tab-1, set icon, and update triangle position
+$tabContent.hide();
+$('#tab-1').fadeIn(300);
+$tabs.find('.tab-icon').html('+');
+$tabs.first().addClass('tab-active').find('.tab-icon').html('-');
+updateTrianglePosition($tabs.first());
+
+// Handle tab click with fade effect
+$tabs.on('click', function (event) {
+    event.preventDefault();
+    const $this = $(this);
+    const target = $this.find('.tab-icon').attr('href');
+    const $targetContent = $(target);
+
+    if (!$this.hasClass('tab-active')) {
+        // Remove active class and reset icons
+        $tabs.removeClass('tab-active').find('.tab-icon').html('+');
+        $this.addClass('tab-active').find('.tab-icon').html('-');
+
+        // Fade out all tab contents and then fade in the target content
+        $tabContent.filter(':visible').stop(true, true).fadeOut(300, function () {
+            $targetContent.stop(true, true).fadeIn(300);
+        });
+
+        // Update triangle position
+        updateTrianglePosition($this);
+    }
+});
+
+// Function to update the position of the triangle (::before)
+function updateTrianglePosition($activeTab) {
+    const tabOffset = $activeTab.position().left;
+    const tabWidth = $activeTab.outerWidth();
+    const newLeft = tabOffset + tabWidth / 1000;
+
+    // $('.tabs-stage').get(0).style.setProperty('--triangle-left', `${newLeft}px`);
+    }
+}
