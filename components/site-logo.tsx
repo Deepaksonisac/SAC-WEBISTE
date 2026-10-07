@@ -11,9 +11,9 @@ export function SiteLogo({ className, imageClassName }: { className?: string; im
     >
       <Image
         src="/images/sac-logo.png"
-        alt="SAC — business is people. BMS, Security, Fire, IT, AV"
-        width={1816}
-        height={866}
+        alt="SAC — business is people"
+        width={1727}
+        height={625}
         priority
         className={cn('h-11 w-auto object-contain sm:h-12', imageClassName)}
       />
