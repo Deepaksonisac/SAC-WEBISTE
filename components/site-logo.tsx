@@ -10,12 +10,12 @@ export function SiteLogo({ className, imageClassName }: { className?: string; im
       aria-label="Secure Automation Consultants home"
     >
       <Image
-        src="/images/logo.png"
-        alt="SAC — Secure Automation Consultants, business is people"
-        width={166}
-        height={68}
+        src="/images/sac-logo.png"
+        alt="SAC — business is people. BMS, Security, Fire, IT, AV"
+        width={1816}
+        height={866}
         priority
-        className={cn('h-9 w-auto object-contain sm:h-10 dark:brightness-0 dark:invert', imageClassName)}
+        className={cn('h-11 w-auto object-contain sm:h-12', imageClassName)}
       />
     </Link>
   )
