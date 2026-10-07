@@ -10,7 +10,7 @@ export function SiteLogo({ className, imageClassName }: { className?: string; im
       aria-label="Secure Automation Consultants home"
     >
       <Image
-        src="/images/sac-logo.png"
+        src="/images/sac-logo-2026.png"
         alt="SAC — business is people"
         width={1727}
         height={625}
