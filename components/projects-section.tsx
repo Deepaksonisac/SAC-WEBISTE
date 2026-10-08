@@ -67,17 +67,17 @@ const PROJECTS: Project[] = [
     tags: ['Hospitality ELV Solutions'],
   },
   {
-    client: 'ITC Mementos Phase-1',
+    client: 'ITC Mementos',
     location: 'Jaipur',
     industry: 'Hospitality',
     image: '/images/projects/itc-mementos-phase-1.jpg',
     tags: ['Hospitality ELV Solutions'],
   },
   {
-    client: 'ITC Mementos Phase-2',
+    client: 'Geetanjali Institute of Medical Sciences (GIMS)',
     location: 'Jaipur',
     industry: 'Hospitality',
-    image: '/images/projects/itc-mementos-phase-2.jpg',
+    image: "/images/gims.jpg",
     tags: ['Hospitality ELV Solutions'],
   },
   {
@@ -152,14 +152,7 @@ const PROJECTS: Project[] = [
     tags: ['Infrastructure ELV Solutions'],
   },
   {
-    client: 'Utkarsh Small Finance Bank Phase-1',
-    location: 'Varanasi',
-    industry: 'Infrastructure & Commercial',
-    image: '/images/projects/utkarsh-bank-phase-1.png',
-    tags: ['Commercial ELV Solutions'],
-  },
-  {
-    client: 'Utkarsh Small Finance Bank Phase-2',
+    client: 'Utkarsh Small Finance Bank',
     location: 'Varanasi',
     industry: 'Infrastructure & Commercial',
     image: '/images/projects/utkarsh-bank-phase-2.png',
@@ -290,6 +283,7 @@ export function ProjectsSection() {
     </section>
   )
 }
+
 
 
 
