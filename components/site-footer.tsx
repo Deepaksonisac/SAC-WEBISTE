@@ -73,7 +73,7 @@ export function SiteFooter() {
 
           {/* COMPANY */}
           <div>
-            <SiteLogo />
+            <SiteLogo variant="footer" className="w-fit" />
 
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
               Engineering trust since 2010 &mdash; tailor-made Building

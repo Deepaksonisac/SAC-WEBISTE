@@ -52,16 +52,16 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+        'fixed inset-x-0 top-0 z-50 border-b bg-background transition-shadow duration-300',
         solid
-          ? 'border-b border-border bg-background/85 backdrop-blur-md'
-          : 'border-b border-transparent bg-transparent',
+          ? 'border-border shadow-[0_2px_12px_-4px_rgb(0_0_0/0.12)]'
+          : 'border-border/60 shadow-none',
       )}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:h-20 sm:px-6 lg:h-24 lg:px-8">
 
         {/* LOGO */}
-        <SiteLogo />
+        <SiteLogo priority />
 
         {/* DESKTOP NAVIGATION */}
         <ul className="hidden items-center gap-1 lg:flex">
@@ -142,10 +142,7 @@ export function Navbar() {
             >
               {/* MOBILE HEADER */}
               <div className="mb-4 flex items-center justify-between">
-                <SiteLogo
-                  className="shrink-0"
-                  imageClassName="h-14 sm:h-14"
-                />
+                <SiteLogo variant="menu" />
 
                 <button
                   type="button"
