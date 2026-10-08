@@ -2,8 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-const LOGO_WIDTH = 1727
-const LOGO_HEIGHT = 625
+const LOGO_WIDTH = 2086
+const LOGO_HEIGHT = 754
 
 const VARIANTS = {
   header: {
@@ -38,7 +38,7 @@ export function SiteLogo({
       aria-label="Secure Automation Consultants home"
     >
       <Image
-        src="/images/sac-logo-2026.png"
+        src="/images/sac-logo-teal.png"
         alt="SAC — business is people"
         width={LOGO_WIDTH}
         height={LOGO_HEIGHT}
