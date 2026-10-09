@@ -130,16 +130,36 @@
   }
 }
 
+/* Two identical groups each end with the same trailing padding, so -50% equals
+   exactly one group width and the loop joins without a gap. */
 .sac-marquee {
   display: flex;
   width: max-content;
-  animation: sac-marquee var(--sac-marquee-duration, 80s) linear infinite;
+  animation: sac-marquee var(--sac-marquee-duration, 90s) linear infinite;
   will-change: transform;
+  backface-visibility: hidden;
+}
+
+.sac-marquee-viewport:hover .sac-marquee {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sac-marquee {
     animation: none;
     will-change: auto;
+    width: auto;
+    justify-content: center;
+  }
+
+  .sac-marquee-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 1rem;
+    padding-inline: 1.5rem;
+  }
+
+  .sac-marquee-group[data-duplicate] {
+    display: none;
   }
 }
