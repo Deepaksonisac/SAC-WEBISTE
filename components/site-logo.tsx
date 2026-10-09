@@ -2,8 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-const LOGO_WIDTH = 1414
-const LOGO_HEIGHT = 723
+const LOGO_WIDTH = 1416
+const LOGO_HEIGHT = 724
 
 const VARIANTS = {
   header: {
