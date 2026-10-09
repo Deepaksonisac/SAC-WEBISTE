@@ -131,32 +131,15 @@
 }
 
 .sac-marquee {
-  animation: sac-marquee 40s linear infinite;
+  display: flex;
+  width: max-content;
+  animation: sac-marquee var(--sac-marquee-duration, 80s) linear infinite;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sac-marquee {
     animation: none;
+    will-change: auto;
   }
-}
-
-/* SAC Trust Marquee - Continuous Moving Line */
-@keyframes sac-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.sac-marquee {
-  display: flex;
-  width: max-content;
-  animation: sac-marquee 45s linear infinite !important;
-  will-change: transform;
-}
-
-.sac-marquee:hover {
-  animation-play-state: running !important;
 }
