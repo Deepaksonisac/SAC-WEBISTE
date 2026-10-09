@@ -120,26 +120,3 @@
     @apply font-heading;
   }
 }
-
-@keyframes sac-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.sac-marquee {
-  display: flex;
-  width: max-content;
-  animation: sac-marquee var(--sac-marquee-duration, 80s) linear infinite;
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sac-marquee {
-    animation: none;
-    will-change: auto;
-  }
-}
