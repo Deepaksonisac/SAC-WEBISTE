@@ -1,20 +1,15 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MapPin } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
-<<<<<<< HEAD
-import { PROJECTS, type Industry } from '@/lib/projects'
-=======
 
 type Industry =
   | 'Hospitality'
   | 'Healthcare'
   | 'Infrastructure & Commercial'
-  | 'Industrial'
-
 
 interface Project {
   client: string
@@ -25,41 +20,6 @@ interface Project {
 }
 
 const PROJECTS: Project[] = [
-  {
-    client: 'NTPC',
-    location: 'India',
-    industry: 'Industrial',
-    image: '/images/projects/industrial/ntpc.jpg',
-    tags: [],
-  },
-  {
-    client: 'NPCIL',
-    location: 'India',
-    industry: 'Industrial',
-    image: '/images/projects/industrial/npcil.jpg',
-    tags: [],
-  },
-  {
-    client: 'IOCL',
-    location: 'India',
-    industry: 'Industrial',
-    image: '/images/projects/industrial/iocl.jpg',
-    tags: [],
-  },
-  {
-    client: 'Cairn India - Vedanta',
-    location: 'India',
-    industry: 'Industrial',
-    image: '/images/projects/industrial/cairn-india-vedanta.jpg',
-    tags: [],
-  },
-  {
-    client: 'HPCL',
-    location: 'India',
-    industry: 'Industrial',
-    image: '/images/projects/industrial/hpcl.jpg',
-    tags: [],
-  },
 
   // ==========================================
   // HOSPITALITY
@@ -220,18 +180,12 @@ const PROJECTS: Project[] = [
     tags: ['Commercial Building Solutions'],
   },
 ]
->>>>>>> fc1c165 (Update SAC website - Industrial projects and UI improvements)
 
 const FILTERS: (Industry | 'All')[] = [
   'All',
   'Hospitality',
   'Healthcare',
-<<<<<<< HEAD
   'Infrastructure & Commercial',
-  'Industrial',
-=======
-  'Infrastructure & Commercial', 'Industrial',
->>>>>>> fc1c165 (Update SAC website - Industrial projects and UI improvements)
 ]
 
 export function ProjectsSection() {
@@ -339,9 +293,5 @@ export function ProjectsSection() {
 
 
 
-<<<<<<< HEAD
-=======
 
 
-
->>>>>>> fc1c165 (Update SAC website - Industrial projects and UI improvements)

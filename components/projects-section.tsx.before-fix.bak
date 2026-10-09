@@ -1,13 +1,10 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MapPin } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
-<<<<<<< HEAD
-import { PROJECTS, type Industry } from '@/lib/projects'
-=======
 
 type Industry =
   | 'Hospitality'
@@ -187,51 +184,45 @@ const PROJECTS: Project[] = [
   {
     client: 'Ayodhya Airport',
     location: 'Ayodhya',
-    industry: 'Infrastructure & Commercial',
+    industry: 'Infrastructure & Commercial', 'Industrial',
     image: '/images/projects/ayodhya-airport.jpg',
     tags: ['Infrastructure ELV Solutions'],
   },
   {
     client: 'Utkarsh Small Finance Bank',
     location: 'Varanasi',
-    industry: 'Infrastructure & Commercial',
+    industry: 'Infrastructure & Commercial', 'Industrial',
     image: '/images/projects/utkarsh-bank-phase-2.png',
     tags: ['Commercial ELV Solutions'],
   },
   {
     client: 'MS Emerging Commercial Building',
     location: 'Jaipur',
-    industry: 'Infrastructure & Commercial',
+    industry: 'Infrastructure & Commercial', 'Industrial',
     image: '/ms-emerging-building.png',
     tags: ['Commercial Building Solutions'],
   },
   {
     client: 'Minto Hall',
     location: 'Bhopal',
-    industry: 'Infrastructure & Commercial',
+    industry: 'Infrastructure & Commercial', 'Industrial',
     image: '/images/projects/minto-hall.png',
     tags: ['Integrated ELV Solutions'],
   },
   {
     client: 'Jagatpura World Center',
     location: 'Jaipur',
-    industry: 'Infrastructure & Commercial',
+    industry: 'Infrastructure & Commercial', 'Industrial',
     image: '/jagatpura-world-center-new.jfif',
     tags: ['Commercial Building Solutions'],
   },
 ]
->>>>>>> fc1c165 (Update SAC website - Industrial projects and UI improvements)
 
 const FILTERS: (Industry | 'All')[] = [
   'All',
   'Hospitality',
   'Healthcare',
-<<<<<<< HEAD
-  'Infrastructure & Commercial',
-  'Industrial',
-=======
   'Infrastructure & Commercial', 'Industrial',
->>>>>>> fc1c165 (Update SAC website - Industrial projects and UI improvements)
 ]
 
 export function ProjectsSection() {
@@ -339,9 +330,6 @@ export function ProjectsSection() {
 
 
 
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> fc1c165 (Update SAC website - Industrial projects and UI improvements)

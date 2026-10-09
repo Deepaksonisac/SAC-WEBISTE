@@ -1,7 +1,6 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
+/* SAC Trust Marquee - Smooth & Slow Animation */
 
+<<<<<<< HEAD
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -121,6 +120,8 @@
   }
 }
 
+=======
+>>>>>>> fc1c165 (Update SAC website - Industrial projects and UI improvements)
 @keyframes sac-marquee {
   from {
     transform: translateX(0);
@@ -133,6 +134,7 @@
 .sac-marquee {
   display: flex;
   width: max-content;
+<<<<<<< HEAD
   animation: sac-marquee var(--sac-marquee-duration, 80s) linear infinite;
   will-change: transform;
 }
@@ -143,3 +145,18 @@
     will-change: auto;
   }
 }
+=======
+  animation: sac-marquee 65s linear infinite;
+  will-change: transform;
+}
+
+.sac-marquee:hover {
+  animation-play-state: running;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sac-marquee {
+    animation: none;
+  }
+}
+>>>>>>> fc1c165 (Update SAC website - Industrial projects and UI improvements)
