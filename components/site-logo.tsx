@@ -2,8 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-const LOGO_WIDTH = 1774
-const LOGO_HEIGHT = 887
+const LOGO_WIDTH = 1414
+const LOGO_HEIGHT = 723
 
 const VARIANTS = {
   header: {
@@ -11,7 +11,7 @@ const VARIANTS = {
     sizes: '(min-width: 1024px) 176px, (min-width: 640px) 150px, 120px',
   },
   footer: {
-    className: 'w-[200px] rounded-lg bg-background',
+    className: 'w-[200px]',
     sizes: '200px',
   },
   menu: {
